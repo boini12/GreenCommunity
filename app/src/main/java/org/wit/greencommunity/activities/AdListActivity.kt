@@ -21,6 +21,7 @@ import org.wit.greencommunity.adapter.AdListener
 import org.wit.greencommunity.databinding.ActivityAdListBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
+import org.wit.greencommunity.models.LocationModel
 import timber.log.Timber
 
 class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigationItemSelectedListener{
@@ -30,6 +31,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var auth : FirebaseAuth
+    private lateinit var currentLocation : LocationModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         app = application as MainApp
 
         auth = FirebaseAuth.getInstance()
-        
+
         val layoutManager = LinearLayoutManager(this)
         binding.adListActivity.recyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
         binding.adListActivity.recyclerView.adapter = AdAdapter(app.ads.findAll(), this)

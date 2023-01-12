@@ -1,22 +1,38 @@
 package org.wit.greencommunity.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.os.Bundle
+import android.os.Looper
+import android.provider.Settings
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.Person
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import org.wit.greencommunity.R
 import org.wit.greencommunity.adapter.adjustNavHeader
 import org.wit.greencommunity.databinding.ActivityMainBinding
 import org.wit.greencommunity.main.MainApp
+import org.wit.greencommunity.models.LocationModel
+import org.wit.greencommunity.models.UserModel
 import timber.log.Timber.i
+import java.util.jar.Manifest
 
 
 /**
@@ -32,6 +48,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var app : MainApp
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
+    private val PERMISSION_ID = 42
+    private lateinit var mFusedLocationClient : FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +72,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         app = application as MainApp
 
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         i("GreenCommunity Application has been started")
 
         binding.homeActivity.btnExplore.setOnClickListener(){
             i("Explore Button pressed")
+
+            getLastLocation()
 
             intent = if(auth.currentUser != null){
                 Intent(this@HomeActivity, AdListActivity::class.java)
@@ -106,6 +129,82 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
      */
 
+    /**
+     * For all the following methods I used the following guide to get the current Location of the user
+     * This is needed in order to display the correct ads that are active near this user
+     * Link: https://www.androidhire.com/current-location-in-android-using-kotlin/
+     * Last accessed: 12.01.2023
+     */
+
+    fun checkPermissions(): Boolean {
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                return true
+        }
+        return false
+    }
+
+    fun requestPermissions(){
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION),
+        PERMISSION_ID)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == PERMISSION_ID){
+           if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+               //Granted
+           }
+       }
+    }
+
+    fun isLocationEnabled() : Boolean {
+        var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
+                LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    fun getLastLocation(){
+        if(checkPermissions()){
+            if(isLocationEnabled()){
+
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    var location: Location? = task.result
+                    if(location == null){
+                        Toast.makeText(this, "sth. went wrong", Toast.LENGTH_LONG).show()
+                    }else{
+                        // save this location and then give it to AdListActivity? or ask for the Location in AdListActivty
+                        Toast.makeText(this, location.latitude.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, location.longitude.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }else{
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+
+        }else{
+            requestPermissions()
+        }
+    }
+
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
@@ -148,4 +247,5 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 }
+
 

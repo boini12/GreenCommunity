@@ -1,7 +1,6 @@
 package org.wit.greencommunity.models
 
 import android.os.Parcelable
-import com.google.firebase.database.Exclude
 import kotlinx.android.parcel.Parcelize
 
 
@@ -15,9 +14,11 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class AdModel( var id: Long = 0L,
-                    var title:String="",
-                    var description:String="",
-                    var price:Double=0.00,
-                    var isFree:Boolean=false) : Parcelable
+data class AdModel(var id: Long = 0L,
+                   var title:String="",
+                   var description:String="",
+                   var price:Double=0.00,
+                   var longitude:Double = 0.00,
+                   var latitude:Double = 0.00,
+                   var isFree:Boolean=false) : Parcelable
 
