@@ -192,7 +192,14 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
 
             R.id.ads -> {
-                TODO("needs to still be implemented")
+                if(auth.currentUser != null){
+                    intent = Intent(this, UserAdsActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
+                    intent = Intent(this, LoginOrSignUpActivity::class.java)
+                    startActivity(intent)
+                }
             }
             R.id.logout -> {
                 if(auth.currentUser != null){

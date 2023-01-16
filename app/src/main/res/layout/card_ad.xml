@@ -29,6 +29,17 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/adPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lines="1"
+            android:text="Title Placeholder"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
 
 
     </LinearLayout>

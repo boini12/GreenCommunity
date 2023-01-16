@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.firestore.auth.User
 import org.wit.greencommunity.R
 import org.wit.greencommunity.adapter.AdAdapter
 import org.wit.greencommunity.adapter.AdListener
@@ -23,24 +21,22 @@ import org.wit.greencommunity.databinding.ActivityAdListBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
 import timber.log.Timber
-import timber.log.Timber.i
 
-class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigationItemSelectedListener{
-    
+class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigationItemSelectedListener{
     lateinit var app: MainApp
     private lateinit var binding: ActivityAdListBinding
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var navView : NavigationView
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
-    private lateinit var adList : ArrayList<AdModel>
+    private lateinit var userAdList : ArrayList<AdModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appToolbar.toolbar)
-        
+
         app = application as MainApp
 
         auth = FirebaseAuth.getInstance()
@@ -50,7 +46,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
 
-        adList = arrayListOf<AdModel>()
+        userAdList = arrayListOf<AdModel>()
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, binding.appToolbar.toolbar, 0, 0
@@ -58,8 +54,8 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
-        
-        
+
+
     }
 
 
@@ -84,20 +80,23 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                adList.clear()
+                userAdList.clear()
 
                 if (snapshot.exists()) {
 
 
                     for (list in snapshot.children) {
 
-
                         val data = list.getValue(AdModel::class.java)
+                        if (data != null && auth.currentUser != null) {
+                            if(data.userID == auth.currentUser!!.uid){
+                                userAdList.add(data!!)
+                            }
+                        }
 
-                        adList.add(data!!)
 
                     }
-                    binding.adListActivity.recyclerView.adapter = AdAdapter(adList, this@AdListActivity)
+                    binding.adListActivity.recyclerView.adapter = AdAdapter(userAdList, this@UserAdsActivity)
 
                 }
 
@@ -106,51 +105,10 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
 
             override fun onCancelled(error: DatabaseError) {
-                i("Data couldn't be received")
+                Timber.i("Data couldn't be received")
             }
 
         })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_add -> {
-                val launcherIntent = Intent(this, AdActivity::class.java)
-                getResult.launch(launcherIntent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
-    private val getResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                (binding.adListActivity.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.ads.findAll().size)
-            }
-        }
-
-    override fun onAdClick(ad: AdModel) {
-        val launcherIntent = Intent(this, AdActivity::class.java)
-        launcherIntent.putExtra("ad_edit", ad)
-        getClickResult.launch(launcherIntent)
-    }
-
-    private val getClickResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-        if(it.resultCode == Activity.RESULT_OK){
-            (binding.adListActivity.recyclerView.adapter)?.
-            notifyItemRangeChanged(0, app.ads.findAll().size)
-        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -175,14 +133,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                 }
             }
             R.id.ads -> {
-                if(auth.currentUser != null){
-                    intent = Intent(this, UserAdsActivity::class.java)
-                    startActivity(intent)
-                }else{
-                Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
-                intent = Intent(this, LoginOrSignUpActivity::class.java)
-                startActivity(intent)
-                }
+                TODO("needs to still be implemented")
             }
             R.id.logout -> {
                 if(auth.currentUser != null){
@@ -198,5 +149,20 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onAdClick(ad: AdModel) {
+        val launcherIntent = Intent(this, AdActivity::class.java)
+        launcherIntent.putExtra("ad_edit", ad)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+        if(it.resultCode == Activity.RESULT_OK){
+            (binding.adListActivity.recyclerView.adapter)?.
+            notifyItemRangeChanged(0, app.ads.findAll().size)
+        }
     }
 }

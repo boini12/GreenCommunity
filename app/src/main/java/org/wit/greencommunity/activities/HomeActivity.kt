@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.auth.User
 import org.wit.greencommunity.R
 import org.wit.greencommunity.adapter.adjustNavHeader
 import org.wit.greencommunity.databinding.ActivityMainBinding
@@ -189,8 +190,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Toast.makeText(this, "sth. went wrong", Toast.LENGTH_LONG).show()
                     }else{
                         // save this location and then give it to AdListActivity? or ask for the Location in AdListActivty
-                        Toast.makeText(this, location.latitude.toString(), Toast.LENGTH_LONG).show()
-                        Toast.makeText(this, location.longitude.toString(), Toast.LENGTH_LONG).show()
+
                     }
                 }
             }else{
@@ -228,7 +228,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.ads -> {
-                TODO("needs to still be implemented")
+                if(auth.currentUser != null){
+                    intent = Intent(this, UserAdsActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
+                    intent = Intent(this, LoginOrSignUpActivity::class.java)
+                    startActivity(intent)
+                }
             }
             R.id.logout -> {
                 if(auth.currentUser != null){

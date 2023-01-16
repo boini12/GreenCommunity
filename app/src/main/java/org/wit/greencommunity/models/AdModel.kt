@@ -15,10 +15,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AdModel(var id: Long = 0L,
-                   var title:String="",
-                   var description:String="",
+                   var title:String?= null,
+                   var description:String?=null,
                    var price:Double=0.00,
                    var longitude:Double = 0.00,
                    var latitude:Double = 0.00,
-                   var isFree:Boolean=false) : Parcelable
+                   var isFree:Boolean=false,
+                   var userID: String?=null) : Parcelable
 

@@ -94,7 +94,7 @@ class AdActivity : AppCompatActivity() {
                 ad.price = binding.adPrice.text.toString().toDouble()
             }
 
-            if(ad.title.isNotEmpty()){
+            if(ad.title!!.isNotEmpty()){
                 writeNewAd()
                 app.ads.create(ad.copy())
                 setResult(RESULT_OK)
@@ -108,14 +108,26 @@ class AdActivity : AppCompatActivity() {
 
     /**
      * For this method I used a changed version of a method shown in this link
-     * Link: https://www.folkstalk.com/tech/how-to-prevent-overwriting-existing-data-in-firebase-with-solutions/
-     * Last opened: 05.12.2022
+     * Link: https://www.kodeco.com/books/saving-data-on-android/v1.0/chapters/13-reading-to-writing-from-realtime-database
+     * Last opened: 16.01.2023
      */
 
     private fun writeNewAd(){
-        var newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree)
-        database.child(newAd.id.toString()).push().setValue(newAd)
-        database.child(newAd.id.toString()).child("user").setValue(auth.currentUser!!.uid)
+        var newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree,
+            auth.currentUser?.uid
+        )
+        /*
+        database.child("posts").push().setValue(newAd)
+        //database.child(newAd.id.toString()).push().setValue(newAd)
+
+
+         */
+        val key = database.push().key ?: ""
+
+        database.child(key)
+            .setValue(newAd)
+
+
     }
 
     /**
