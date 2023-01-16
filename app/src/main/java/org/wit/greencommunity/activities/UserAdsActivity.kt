@@ -71,6 +71,9 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
      * This method gets the data from my firebase realtime database and then displays it in the recyclerview using the adapter
      * Link: https://stackoverflow.com/questions/69238874/how-can-i-retrieve-firebase-data-and-implement-it-to-recycler-view
      * Last accessed: 16.01.2023
+     *
+     * The difference from the method in the AdListActivity, is that here only the ads that belong to the currently
+     * logged in user, will get displayed in the RecyclerView
      */
 
     private fun realtimeFirebaseData(){
@@ -114,13 +117,13 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser == null){
-                    item.isVisible = true
-                    intent = Intent(this,LoginActivity::class.java)
-                    startActivity(intent)
+                if(auth.currentUser != null){
+                    // nothing happens
                 }else{
-                    item.isVisible = false
+                    intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
+
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -133,18 +136,27 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
                 }
             }
             R.id.ads -> {
-                TODO("needs to still be implemented")
+                if(auth.currentUser != null){
+                    intent = Intent(this, UserAdsActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
+                    intent = Intent(this, LoginOrSignUpActivity::class.java)
+                    startActivity(intent)
+                }
             }
             R.id.logout -> {
                 if(auth.currentUser != null){
-                    item.isVisible = true
                     auth.signOut()
                     Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
                     Timber.i("User has been logged out")
-                    recreate()
-                }else{
-                    item.isVisible = false
+                    intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 }
+            }
+            R.id.home -> {
+                intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

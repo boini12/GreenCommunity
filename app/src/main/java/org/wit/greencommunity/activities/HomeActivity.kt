@@ -32,6 +32,7 @@ import org.wit.greencommunity.databinding.ActivityMainBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.LocationModel
 import org.wit.greencommunity.models.UserModel
+import timber.log.Timber
 import timber.log.Timber.i
 import java.util.jar.Manifest
 
@@ -137,7 +138,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * Last accessed: 12.01.2023
      */
 
-    fun checkPermissions(): Boolean {
+    private fun checkPermissions(): Boolean {
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                 return true
@@ -145,7 +146,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
-    fun requestPermissions(){
+    private fun requestPermissions(){
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION),
         PERMISSION_ID)
     }
@@ -163,14 +164,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
        }
     }
 
-    fun isLocationEnabled() : Boolean {
+    private fun isLocationEnabled() : Boolean {
         var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
                 LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
-    fun getLastLocation(){
+    private fun getLastLocation(){
         if(checkPermissions()){
             if(isLocationEnabled()){
 
@@ -209,13 +210,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser == null){
-                    item.isVisible = true
-                    intent = Intent(this,LoginActivity::class.java)
-                    startActivity(intent)
+                if(auth.currentUser != null){
+                    // nothing happens
                 }else{
-                    item.isVisible = false
+                    intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
+
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -239,14 +240,16 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.logout -> {
                 if(auth.currentUser != null){
-                    item.isVisible = true
                     auth.signOut()
                     Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
-                    i("User has been logged out")
-                    recreate()
-                }else{
-                    item.isVisible = false
+                    Timber.i("User has been logged out")
+                    intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 }
+            }
+            R.id.home -> {
+                intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

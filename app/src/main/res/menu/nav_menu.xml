@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/login"
-        android:title="Login"
-        android:visible="false"/>
+    <group>
+        <item
+            android:id="@+id/home"
+            android:title="Home" />
 
-    <item
-        android:id="@+id/home"
-        android:title="Home" />
+        <item
+            android:id="@+id/profile"
+            android:title="Profile"
+            />
 
-    <item
-        android:id="@+id/profile"
-        android:title="Profile"
-        />
+        <item
+            android:id="@+id/ads"
+            android:title="Your Ads" />
+    </group>
 
-    <item
-        android:id="@+id/ads"
-        android:title="Your Ads" />
 
-    <item
-        android:id="@+id/logout"
-        android:title="Logout" />
+    <item android:title="Account settings">
+        <menu>
+            <item
+                android:id="@+id/login"
+                android:title="Login"
+                />
+
+            <item
+                android:id="@+id/logout"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+
 
 
 </menu>

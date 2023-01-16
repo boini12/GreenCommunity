@@ -156,13 +156,13 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser == null){
-                    item.isVisible = true
-                    intent = Intent(this,LoginActivity::class.java)
-                    startActivity(intent)
+                if(auth.currentUser != null){
+                    // nothing happens
                 }else{
-                    item.isVisible = false
+                    intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }
+
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -179,21 +179,23 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                     intent = Intent(this, UserAdsActivity::class.java)
                     startActivity(intent)
                 }else{
-                Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
-                intent = Intent(this, LoginOrSignUpActivity::class.java)
-                startActivity(intent)
+                    Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
+                    intent = Intent(this, LoginOrSignUpActivity::class.java)
+                    startActivity(intent)
                 }
             }
             R.id.logout -> {
                 if(auth.currentUser != null){
-                    item.isVisible = true
                     auth.signOut()
                     Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
                     Timber.i("User has been logged out")
-                    recreate()
-                }else{
-                    item.isVisible = false
+                    intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 }
+            }
+            R.id.home -> {
+                intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
