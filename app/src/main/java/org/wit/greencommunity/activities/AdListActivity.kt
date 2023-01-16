@@ -139,9 +139,11 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         }
 
     override fun onAdClick(ad: AdModel) {
+
         val launcherIntent = Intent(this, AdActivity::class.java)
-        launcherIntent.putExtra("ad_edit", ad)
+        launcherIntent.putExtra("ad_view", ad)
         getClickResult.launch(launcherIntent)
+
     }
 
     private val getClickResult = registerForActivityResult(

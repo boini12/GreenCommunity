@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.awaitAll
 import org.wit.greencommunity.R
 import org.wit.greencommunity.databinding.ActivityAdBinding
+import org.wit.greencommunity.databinding.ActivityAdViewBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
 import org.wit.greencommunity.models.LocationModel
@@ -38,12 +39,14 @@ import timber.log.Timber.i
 class AdActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdBinding
+    private lateinit var viewBinding:ActivityAdViewBinding
     lateinit var app: MainApp
     private var ad = AdModel()
     private lateinit var auth: FirebaseAuth
     private lateinit var database : DatabaseReference
     private val PERMISSION_ID = 42
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +68,25 @@ class AdActivity : AppCompatActivity() {
 
         i("AdActivity has started")
 
+        if(intent.hasExtra("ad_view")){
+            ad = intent.extras?.getParcelable("ad_view")!!
+            viewBinding = ActivityAdViewBinding.inflate(layoutInflater)
+            setContentView(viewBinding.root)
+            viewBinding.adTitle.text = ad.title
+            viewBinding.adDescription.text = ad.description
+            viewBinding.adFree.isChecked = ad.isFree
+            viewBinding.adPrice.text = ad.price.toString()
+        }
+
+
         if(intent.hasExtra("ad_edit")) {
+            edit = true
             ad = intent.extras?.getParcelable("ad_edit")!!
             binding.adTitle.setText(ad.title)
             binding.adDescription.setText(ad.description)
             binding.adFree.isChecked = ad.isFree
-            binding.adFree.text = ad.price.toString()
+            binding.adPrice.setText(ad.price.toString())
+            binding.btnAdd.text = "Save Ad"
         }
 
         binding.btnAdd.setOnClickListener{
@@ -78,15 +94,6 @@ class AdActivity : AppCompatActivity() {
             i("ID is: $ad.id")
             ad.title = binding.adTitle.text.toString()
             ad.description = binding.adDescription.text.toString()
-
-            binding.adFree.setOnCheckedChangeListener { _, isChecked ->
-                if(isChecked){
-                    Toast.makeText(this, isChecked.toString(), Toast.LENGTH_LONG).show()
-                }else{
-                    Toast.makeText(this, isChecked.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-
             ad.isFree = binding.adFree.isChecked
             if(ad.isFree){
                 ad.price = 0.0
@@ -94,11 +101,18 @@ class AdActivity : AppCompatActivity() {
                 ad.price = binding.adPrice.text.toString().toDouble()
             }
 
+
             if(ad.title!!.isNotEmpty()){
-                writeNewAd()
-                app.ads.create(ad.copy())
-                setResult(RESULT_OK)
-                finish()
+
+                if(edit){
+                    app.ads.update(ad.copy())
+                    writeNewAd()
+                }else{
+                    writeNewAd()
+                    app.ads.create(ad.copy())
+                    setResult(RESULT_OK)
+                    finish()
+                }
             }else{
                 Snackbar.make(it, "Please Enter a Title", Snackbar.LENGTH_LONG).show()
             }
@@ -127,6 +141,10 @@ class AdActivity : AppCompatActivity() {
         database.child(key)
             .setValue(newAd)
 
+
+    }
+
+    private fun updateAd(){
 
     }
 
