@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -14,21 +15,28 @@ import android.view.MenuItem
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.awaitAll
 import org.wit.greencommunity.R
+import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityAdBinding
 import org.wit.greencommunity.databinding.ActivityAdViewBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
 import org.wit.greencommunity.models.LocationModel
 import timber.log.Timber.i
+import java.net.URI
 
 /**
  *  This is the AdActivity of the GreenCommunity App
@@ -46,7 +54,10 @@ class AdActivity : AppCompatActivity() {
     private lateinit var database : DatabaseReference
     private val PERMISSION_ID = 42
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var img : Uri
     var edit = false
+    private lateinit var key : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +77,19 @@ class AdActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
+        if(ad.adImg != null){
+            img = ad.adImg!!.toUri()
+        }else{
+            img = Uri.EMPTY
+        }
+
+        if(ad.id != null){
+            key = ad.id.toString()
+        }else{
+            key = ""
+        }
+
+
         i("AdActivity has started")
 
         if(intent.hasExtra("ad_view")){
@@ -76,21 +100,37 @@ class AdActivity : AppCompatActivity() {
             viewBinding.adDescription.text = ad.description
             viewBinding.adFree.isChecked = ad.isFree
             viewBinding.adPrice.text = ad.price.toString()
+            Picasso.get()
+                .load(ad.adImg?.toUri())
+                .placeholder(R.mipmap.ic_launcher)
+                .into(viewBinding.adViewImg)
         }
+
 
 
         if(intent.hasExtra("ad_edit")) {
             edit = true
             ad = intent.extras?.getParcelable("ad_edit")!!
             binding.adTitle.setText(ad.title)
+            binding.btnAddImg.text = "Change Image"
             binding.adDescription.setText(ad.description)
             binding.adFree.isChecked = ad.isFree
             binding.adPrice.setText(ad.price.toString())
             binding.btnAdd.text = "Save Ad"
+            Picasso.get()
+                .load(ad.adImg?.toUri())
+                .placeholder(R.mipmap.ic_launcher)
+                .into(binding.adImg)
+
+            img = ad.adImg?.toUri() ?: Uri.EMPTY
         }
 
+        binding.btnAddImg.setOnClickListener {
+            showImagePicker(imageIntentLauncher, this)
+        }
+        registerImagePickerCallback()
+
         binding.btnAdd.setOnClickListener{
-            ad.id = app.ads.getId()
             i("ID is: $ad.id")
             ad.title = binding.adTitle.text.toString()
             ad.description = binding.adDescription.text.toString()
@@ -101,15 +141,18 @@ class AdActivity : AppCompatActivity() {
                 ad.price = binding.adPrice.text.toString().toDouble()
             }
 
+            ad.adImg = img.toString()
 
             if(ad.title!!.isNotEmpty()){
 
                 if(edit){
-                    app.ads.update(ad.copy())
-                    writeNewAd()
+                    //app.ads.update(ad.copy())
+                    updateAd()
+                    setResult(RESULT_OK)
+                    finish()
                 }else{
                     writeNewAd()
-                    app.ads.create(ad.copy())
+                   // app.ads.create(ad.copy())
                     setResult(RESULT_OK)
                     finish()
                 }
@@ -120,6 +163,32 @@ class AdActivity : AppCompatActivity() {
         }
     }
 
+    private fun registerImagePickerCallback(){
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+
+                            val image = result.data!!.data!!
+                            i("image: $image")
+                            img = image
+                            i("img: $img")
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            Picasso.get()
+                                .load(image)
+                                .into(binding.adImg)
+                        }
+                        // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
     /**
      * For this method I used a changed version of a method shown in this link
      * Link: https://www.kodeco.com/books/saving-data-on-android/v1.0/chapters/13-reading-to-writing-from-realtime-database
@@ -127,25 +196,24 @@ class AdActivity : AppCompatActivity() {
      */
 
     private fun writeNewAd(){
-        var newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree,
-            auth.currentUser?.uid
-        )
-        /*
-        database.child("posts").push().setValue(newAd)
-        //database.child(newAd.id.toString()).push().setValue(newAd)
-
-
-         */
-        val key = database.push().key ?: ""
+        key = database.push().key ?: ""
+        ad.id = key
+        var newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree, ad.adImg,
+                    auth.currentUser?.uid)
 
         database.child(key)
             .setValue(newAd)
 
-
     }
 
     private fun updateAd(){
+        val updatedAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree, ad.adImg,
+                        auth.currentUser?.uid)
 
+        key = ad.id.toString()
+        i(ad.adImg)
+
+        database.child(key).setValue(updatedAd)
     }
 
     /**

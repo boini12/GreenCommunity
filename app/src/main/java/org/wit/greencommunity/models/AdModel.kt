@@ -1,5 +1,6 @@
 package org.wit.greencommunity.models
 
+import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -14,12 +15,13 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class AdModel(var id: Long = 0L,
+data class AdModel(var id: String?= null,
                    var title:String?= null,
                    var description:String?=null,
                    var price:Double=0.00,
                    var longitude:Double = 0.00,
                    var latitude:Double = 0.00,
                    var isFree:Boolean=false,
+                   var adImg: String? = null,
                    var userID: String?=null) : Parcelable
 

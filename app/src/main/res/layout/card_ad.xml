@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -18,11 +18,19 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/adCardImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <TextView
             android:id="@+id/adTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_margin="5dp"
             android:lines="1"
             android:text="Title Placeholder"
             android:textColor="@color/colorPrimaryDark"
@@ -35,6 +43,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lines="1"
+            android:layout_margin="5dp"
             android:text="Title Placeholder"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"

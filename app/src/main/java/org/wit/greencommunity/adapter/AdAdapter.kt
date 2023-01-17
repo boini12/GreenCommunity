@@ -2,7 +2,9 @@ package org.wit.greencommunity.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.greencommunity.R
 import org.wit.greencommunity.databinding.CardAdBinding
@@ -26,6 +28,7 @@ class AdAdapter(private var ads: ArrayList<AdModel>, private val listener: AdLis
 
         holder.ad_title.text = ad.title
         holder.ad_price.text = ad.price.toString()
+        holder.ad_img.setImageURI(ad.adImg?.toUri())
 
         holder.bind(ad, listener)
     }
@@ -35,8 +38,9 @@ class AdAdapter(private var ads: ArrayList<AdModel>, private val listener: AdLis
     class MainHolder(private val binding: CardAdBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        val ad_title = itemView.findViewById<TextView>(R.id.adTitle)
-        val ad_price = itemView.findViewById<TextView>(R.id.adPrice)
+        val ad_title: TextView = itemView.findViewById<TextView>(R.id.adTitle)
+        val ad_price: TextView = itemView.findViewById<TextView>(R.id.adPrice)
+        val ad_img : ImageView = itemView.findViewById<ImageView>(R.id.adCardImg)
 
         fun bind(ad: AdModel, listener: AdListener) {
 
