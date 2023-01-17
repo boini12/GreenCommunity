@@ -27,7 +27,12 @@ class AdAdapter(private var ads: ArrayList<AdModel>, private val listener: AdLis
         val ad = ads[position]
 
         holder.ad_title.text = ad.title
-        holder.ad_price.text = ad.price.toString()
+        if(ad.price == 0.0){
+            holder.ad_price.text = "FREE"
+        }else{
+            holder.ad_price.text = ad.price.toString() + "€"
+        }
+
         holder.ad_img.setImageURI(ad.adImg?.toUri())
 
         holder.bind(ad, listener)

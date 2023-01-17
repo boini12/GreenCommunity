@@ -18,37 +18,50 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/adCardImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/adTitle"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:lines="1"
-            android:text="Title Placeholder"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/adPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:lines="1"
-            android:layout_margin="5dp"
-            android:text="Title Placeholder"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/adPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:lines="1"
+                android:text="Title Placeholder"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="5dp" />
 
+            <TextView
+                android:id="@+id/adTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:lines="1"
+                android:text="Title Placeholder"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toTopOf="@+id/adPrice"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintVertical_bias="1.0"
+                tools:layout_editor_absoluteX="10dp" />
+
+            <ImageView
+                android:id="@+id/adCardImg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                card_view:layout_constraintBottom_toTopOf="@+id/adTitle"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="10dp"
+                tools:srcCompat="@tools:sample/avatars" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>

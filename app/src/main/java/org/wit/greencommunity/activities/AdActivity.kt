@@ -77,16 +77,16 @@ class AdActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
-        if(ad.adImg != null){
-            img = ad.adImg!!.toUri()
+        img = if(ad.adImg != null){
+            ad.adImg!!.toUri()
         }else{
-            img = Uri.EMPTY
+            Uri.EMPTY
         }
 
-        if(ad.id != null){
-            key = ad.id.toString()
+        key = if(ad.id != null){
+            ad.id.toString()
         }else{
-            key = ""
+            ""
         }
 
 
@@ -130,29 +130,33 @@ class AdActivity : AppCompatActivity() {
         }
         registerImagePickerCallback()
 
+        // to disable the EditText concerning the price
+
+        binding.adFree.setOnClickListener {
+            if(binding.adFree.isChecked){
+                binding.adPrice.isEnabled = false
+                binding.adPrice.setText("0.0")
+            }else{
+                binding.adPrice.isEnabled = true
+            }
+        }
+
         binding.btnAdd.setOnClickListener{
             i("ID is: $ad.id")
             ad.title = binding.adTitle.text.toString()
             ad.description = binding.adDescription.text.toString()
             ad.isFree = binding.adFree.isChecked
-            if(ad.isFree){
-                ad.price = 0.0
-            }else{
-                ad.price = binding.adPrice.text.toString().toDouble()
-            }
-
+            ad.price = binding.adPrice.text.toString().toDouble()
             ad.adImg = img.toString()
 
             if(ad.title!!.isNotEmpty()){
 
                 if(edit){
-                    //app.ads.update(ad.copy())
                     updateAd()
                     setResult(RESULT_OK)
                     finish()
                 }else{
                     writeNewAd()
-                   // app.ads.create(ad.copy())
                     setResult(RESULT_OK)
                     finish()
                 }
