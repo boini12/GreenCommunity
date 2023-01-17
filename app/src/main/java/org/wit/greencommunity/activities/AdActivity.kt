@@ -292,4 +292,40 @@ class AdActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_ad, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_delete -> {
+                deleteAd()
+                setResult(RESULT_OK)
+                finish()
+                val intent = Intent(this, AdListActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.item_cancel -> {
+                setResult(RESULT_OK)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if(edit){
+            if (menu != null) {
+                menu.findItem(R.id.item_delete).isVisible = true
+            }
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+
+private fun deleteAd() {
+        database.child(key).removeValue()
+    }
+
 }
