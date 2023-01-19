@@ -50,8 +50,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var app : MainApp
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
-    private val PERMISSION_ID = 42
-    private lateinit var mFusedLocationClient : FusedLocationProviderClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,14 +74,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         app = application as MainApp
 
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
 
         i("GreenCommunity Application has been started")
 
         binding.homeActivity.btnExplore.setOnClickListener(){
             i("Explore Button pressed")
 
-            getLastLocation()
 
             intent = if(auth.currentUser != null){
                 Intent(this@HomeActivity, AdListActivity::class.java)
@@ -131,79 +129,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
      */
 
-    /**
-     * For all the following methods I used the following guide to get the current Location of the user
-     * This is needed in order to display the correct ads that are active near this user
-     * Link: https://www.androidhire.com/current-location-in-android-using-kotlin/
-     * Last accessed: 12.01.2023
-     */
 
-    private fun checkPermissions(): Boolean {
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                return true
-        }
-        return false
-    }
-
-    private fun requestPermissions(){
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION),
-        PERMISSION_ID)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == PERMISSION_ID){
-           if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-               //Granted
-           }
-       }
-    }
-
-    private fun isLocationEnabled() : Boolean {
-        var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
-                LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-    }
-
-    private fun getLastLocation(){
-        if(checkPermissions()){
-            if(isLocationEnabled()){
-
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
-                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
-                    if(location == null){
-                        Toast.makeText(this, "sth. went wrong", Toast.LENGTH_LONG).show()
-                    }else{
-                        // save this location and then give it to AdListActivity? or ask for the Location in AdListActivty
-
-                    }
-                }
-            }else{
-                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
-                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
-            }
-
-        }else{
-            requestPermissions()
-        }
-    }
 
 
 

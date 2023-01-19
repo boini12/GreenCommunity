@@ -1,21 +1,28 @@
 package org.wit.greencommunity.activities
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.firestore.auth.User
 import org.wit.greencommunity.R
 import org.wit.greencommunity.adapter.AdAdapter
 import org.wit.greencommunity.adapter.AdListener
@@ -34,9 +41,17 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
     private lateinit var adList : ArrayList<AdModel>
+    private val PERMISSION_ID = 42
+    private lateinit var mFusedLocationClient : FusedLocationProviderClient
+    private lateinit var location: Location
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        location = Location(LocationManager.GPS_PROVIDER)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        getLastLocation()
+
         binding = ActivityAdListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appToolbar.toolbar)
@@ -51,6 +66,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         navView = findViewById(R.id.nav_view)
 
         adList = arrayListOf<AdModel>()
+        //realtimeFirebaseData()
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, binding.appToolbar.toolbar, 0, 0
@@ -58,17 +74,15 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
-        
-        
-    }
 
+    }
 
     override fun onStart() {
         super.onStart()
 
         realtimeFirebaseData()
-
     }
+
 
     /**
      * For this method I used the following Link
@@ -79,7 +93,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
     private fun realtimeFirebaseData(){
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
-
+        i("Begin: " + this.location)
         database?.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -88,15 +102,24 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
                 if (snapshot.exists()) {
 
-
+                    i("Location: " + this@AdListActivity.location)
                     for (list in snapshot.children) {
+                        val radiusInMeters = 5000
+                        var distance= FloatArray(3)
 
 
                         val data = list.getValue(AdModel::class.java)
 
-                        adList.add(data!!)
+                        if (data != null) {
+                            Location.distanceBetween(this@AdListActivity.location.latitude, this@AdListActivity.location.longitude, data.latitude, data.longitude, distance)
+                            if(distance[0] <= radiusInMeters){
+                                adList.add(data)
+                            }
+
+                        }
 
                     }
+
                     binding.adListActivity.recyclerView.adapter = AdAdapter(adList, this@AdListActivity)
 
                 }
@@ -202,5 +225,78 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    /**
+     * For all the following methods I used the following guide to get the current Location of the user
+     * This is needed in order to display the correct ads that are active near this user
+     * Link: https://www.androidhire.com/current-location-in-android-using-kotlin/
+     * Last accessed: 12.01.2023
+     */
+
+    private fun checkPermissions(): Boolean {
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+
+    private fun requestPermissions(){
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == PERMISSION_ID){
+            if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+                //Granted
+            }
+        }
+    }
+
+    private fun isLocationEnabled() : Boolean {
+        var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
+                LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun getLastLocation(){
+        if(checkPermissions()){
+            if(isLocationEnabled()){
+
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    var location: Location? = task.result
+                    if(location == null){
+                        Toast.makeText(this, "Location could not be received", Toast.LENGTH_LONG).show()
+                    }else{
+                        this.location = location
+                    }
+                }
+            }else{
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+
+        }else{
+            requestPermissions()
+        }
     }
 }
