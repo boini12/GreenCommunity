@@ -1,3 +1,4 @@
+<h1 align="center">Welcome to the GreenCommunity 👋</h1>
 # GreenCommunity
 GreenCommunity is an app that is developed using Kotlin and Android Studio. It is an assignment for the KAPK module at the OTH Regensburg.
 The purpose of this app is to, create small communities that can share their homegrown produce (e.g that has been grown in a garden) with their neighborhood.
@@ -36,6 +37,8 @@ The following topics will be covered in the following part:
 * Firebase
     * Realtime Database Structure
     * Code
+
+* Tests
 
 * References
 
