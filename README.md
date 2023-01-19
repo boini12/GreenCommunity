@@ -74,7 +74,7 @@ If the user already has an account, the he can simply login using the E-Mail and
 Either way the user will get redirected to the HomeActivity again after a successful login or sign-up.
 
 ### Exploring ads
-One of the main features that the user can use is to look for ads in their area. The user just has to press the "Explore your area" on the HomeActivity to start looking for ads that are in a 5km radius to their current location.
+One of the main features that the user can use is to look for ads in their area. The user just has to press the "Explore ads in your area" on the HomeActivity to start looking for ads that are in a 5km radius to their current location.
 
 ### Posting ads
 Another major feature of this ad, is posting ads. Logged-in users can create new ads, by pressing the plus icon on the top-right in the AdListActivity. 
@@ -110,7 +110,47 @@ When a user has clicked on a ad in their area, they have the option to message t
 ## UI
 In this section, a brief overview of all the activties can be found with a major focus of their design.
 
-###
+### HomeActivity
+This is the current design of the HomeActivity
+
+<img src="images/HomeActivity.png"
+     alt="HomeActivity"
+     style="float: left; margin-right: 10px;" />
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+The Homeactivity consist of one major functionality. This is the "Explore ads in your area" in the middle of the screen. This button redirects the user to the AdListActivity, if a user is logged-in, or to the LoginOrSignUpActivity, if no user is logged-in yet.
+
+
+
+
+
 
 ## References
 For the Login and the connection to Firebase I used the offical documentation from firebase.
