@@ -28,12 +28,12 @@ The following topics will be covered in the following part:
 * UI
     * Brief overview of the Activities with their corresponding layout
         * HomeActivity
-        * AdActivity
-        * AdListActivity  
-        * LoginActivity
         * LoginOrSignUpActivity
-        * ProfileActivity
+        * LoginActivity
         * SignUpActivity
+        * AdListActivity  
+        * AdActivity
+        * ProfileActivity
         * UserAdsActivity
     * Navigating between Activites
 
@@ -111,7 +111,7 @@ When a user has clicked on a ad in their area, they have the option to message t
 In this section, a brief overview of all the activties can be found with a major focus of their design.
 
 ### HomeActivity
-This is the current design of the HomeActivity
+This is the current design of the HomeActivity:
 
 <img src="images/HomeActivity.png"
      alt="HomeActivity"
@@ -120,6 +120,55 @@ This is the current design of the HomeActivity
 
 The Homeactivity consist of one major functionality. This is the "Explore ads in your area" in the middle of the screen. This button redirects the user to the AdListActivity, if a user is logged-in, or to the LoginOrSignUpActivity, if no user is logged-in yet.
 
+In the HomeActivity the user can also use the Navigation Drawer on the top-left. The Navigation Drawer will be further explained in a another chapter.
+
+### LoginOrSignUpActivity
+
+This is the current desing of the LoginOrSignUpActivity:
+
+<img src="images/LoginOrSignUpActivity.png"
+    alt="LoginOrSignUpActivity"
+     style="float: left; margin-right: 10px;" />
+
+In this the activity, the user is notified of not being signed-in and then gets presented with two buttons. One to sign-up and one to login. This depends on what the user needs. For example, if an user already has an account, then the login button should be used. This will redirect the user to the LoginActivity. If the user doesn't have an account yet, then they should use the sign-up button. This will redirect them to the SignUpActivity.
+
+Bot of those activities will be further explained in the following.
+
+### LoginActivity
+
+This is the current design of the LoginActivity:
+
+<img src="images//LoginActivity.png"
+    alt="LoginActivity"
+     style="float: left; margin-right: 10px;" />
+
+In the LoginActivity only two EditText components are displayed. One for the E-Mail and one for the password. If the creditentials match with the Firebase Authentification Databse the user will be logged-in, a Toast message will be shown to display the success and the user gets redirected to the HomeActivity.
+
+If the users credidentials don't match the user will **not** be logged in and a Toast message will display this error. The user will not be redirected. Therefore, they can try to login again, using the same activity.
+
+### SignUpActivity
+
+This is the current design of the SignUpActivity:
+
+<img src="images//SignUpActivity.png"
+    alt="SignUpActivity"
+     style="float: left; margin-right: 10px;" />
+
+In the SignUpActivity are various components displayed. First there are three EditTexts, which can be used by the user to input their data. These three include the username, the e-mail and the password.
+
+In addition to that, the user can add an image to their profile. This can be done by pressing the add image button. When this button is pressed the user will be redirected to their photos and can selected an image that they would like to upload. 
+
+If they choose to not upload an image, then a default image, which can also be seen on the screenshot, will be used instead.
+
+After entering the needed information, the user can press the sign-up button at the bottom to create an account. The information provided by the user gets stored in the Firebase Authentification Database.
+
+After the successful sign-up the user gets redirected to the HomeActivity and is logged-in with their just created account.
+
+If the sign-up was not successful, information in form of Toast messages are displayed. For example, a Error message will be displayed, if the user doesn't enter a title.
+
+### AdListActivity
+
+This is the current design of the AdListActivity:
 
 
 
