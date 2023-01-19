@@ -87,6 +87,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
         Picasso.get()
             .load(user.photoUrl)
+            .placeholder(R.mipmap.ic_launcher)
             .into(binding.profileActivity.profileImg)
 
         userModel = UserModel(binding.profileActivity.username.text.toString(), binding.profileActivity.email.text.toString(), "", null)
