@@ -76,7 +76,6 @@ class AdActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
         auth = FirebaseAuth.getInstance()
 
-
         img = if(ad.adImg != null){
             ad.adImg!!.toUri()
         }else{
@@ -88,7 +87,6 @@ class AdActivity : AppCompatActivity() {
         }else{
             ""
         }
-
 
         i("AdActivity has started")
 
@@ -105,8 +103,6 @@ class AdActivity : AppCompatActivity() {
                 .placeholder(R.mipmap.ic_launcher)
                 .into(viewBinding.adViewImg)
         }
-
-
 
         if(intent.hasExtra("ad_edit")) {
             edit = true
@@ -130,8 +126,6 @@ class AdActivity : AppCompatActivity() {
         }
         registerImagePickerCallback()
 
-        // to disable the EditText concerning the price
-
         binding.adFree.setOnClickListener {
             if(binding.adFree.isChecked){
                 binding.adPrice.isEnabled = false
@@ -142,14 +136,19 @@ class AdActivity : AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener{
-            i("ID is: $ad.id")
-            ad.title = binding.adTitle.text.toString()
-            ad.description = binding.adDescription.text.toString()
-            ad.isFree = binding.adFree.isChecked
-            ad.price = binding.adPrice.text.toString().toDouble()
-            ad.adImg = img.toString()
+            if((validateTitle() || validatePrice()) && validatePrice() && validateTitle()){
+                ad.title = binding.adTitle.text.toString()
+                ad.description = binding.adDescription.text.toString()
+                ad.isFree = binding.adFree.isChecked
+                ad.price = binding.adPrice.text.toString().toDouble()
 
-            if(ad.title!!.isNotEmpty()){
+                if(ad.price == 0.0 && !ad.isFree){
+                    ad.isFree = true
+                }else if(ad.price != 0.0 && ad.isFree){
+                    ad.isFree = false
+                }
+
+                ad.adImg = img.toString()
 
                 if(edit){
                     updateAd()
@@ -160,11 +159,31 @@ class AdActivity : AppCompatActivity() {
                     setResult(RESULT_OK)
                     finish()
                 }
-            }else{
-                Snackbar.make(it, "Please Enter a Title", Snackbar.LENGTH_LONG).show()
             }
-
         }
+    }
+
+    private fun validateTitle() : Boolean {
+        if(binding.adTitle.text.isEmpty()){
+            binding.adTitle.error = "Please enter a title"
+            return false
+        }
+        return true
+    }
+
+    private fun validatePrice() : Boolean {
+        val regex = Regex("[^0-9 .]+")
+        if(binding.adPrice.text.isEmpty() && !binding.adFree.isChecked){
+            binding.adPrice.error = "Enter a price or make ad free"
+            return false
+        }else if(binding.adPrice.text.contains(regex)) {
+            binding.adPrice.error = "Please enter a valid price"
+            return false
+        }else if(binding.adFree.isChecked){
+            // resets the error indicator
+            binding.adPrice.error = null
+        }
+        return true
     }
 
     private fun registerImagePickerCallback(){
@@ -218,6 +237,42 @@ class AdActivity : AppCompatActivity() {
         i(ad.adImg)
 
         database.child(key).setValue(updatedAd)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_ad, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_delete -> {
+                deleteAd()
+                setResult(RESULT_OK)
+                finish()
+                val intent = Intent(this, AdListActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.item_cancel -> {
+                setResult(RESULT_OK)
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if(edit){
+            if (menu != null) {
+                menu.findItem(R.id.item_delete).isVisible = true
+            }
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+
+    private fun deleteAd() {
+        database.child(key).removeValue()
     }
 
     /**
@@ -279,8 +334,6 @@ class AdActivity : AppCompatActivity() {
                     if(location == null){
                         Toast.makeText(this, "sth. went wrong", Toast.LENGTH_LONG).show()
                     }else{
-                        //Toast.makeText(this, location.latitude.toString(), Toast.LENGTH_LONG).show()
-                        //Toast.makeText(this, location.longitude.toString(), Toast.LENGTH_LONG).show()
                         ad.longitude = location.longitude
                         ad.latitude = location.latitude
                     }
@@ -294,42 +347,6 @@ class AdActivity : AppCompatActivity() {
         }else{
             requestPermissions()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_ad, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_delete -> {
-                deleteAd()
-                setResult(RESULT_OK)
-                finish()
-                val intent = Intent(this, AdListActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.item_cancel -> {
-                setResult(RESULT_OK)
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if(edit){
-            if (menu != null) {
-                menu.findItem(R.id.item_delete).isVisible = true
-            }
-        }
-        return super.onPrepareOptionsMenu(menu)
-    }
-
-
-private fun deleteAd() {
-        database.child(key).removeValue()
     }
 
 }
