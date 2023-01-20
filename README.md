@@ -33,8 +33,11 @@ The following topics will be covered in the following part:
         * SignUpActivity
         * AdListActivity  
         * AdActivity
-        * ProfileActivity
+          * No Parcel
+          * ad_view Parcel
+          * ad_edit Parcel
         * UserAdsActivity
+        * ProfileActivity
     * Navigating between Activites
 
 * Firebase
@@ -216,11 +219,260 @@ If the CheckBox is not checked, but the user still enters a price of 0, then the
 This is the current design of the AdActivity, if the ad_view Parcel is being send:
 
 
+<img src="images/AdActivity_viewParcel.png"
+    alt="AdActivity with view Parcel"
+     style="float: left; margin-right: 10px;" />
+
+The ad_view Parcel is being sent from the AdListActivity, when an ad is clicked on the RecyclerView. This parcel makes sure, that the user can only view the ad and not edit it.
+
+#### ad_edit Parcel
+
+This is the current design of the AdActivity, if the ad_view Parcel is being send:
+
+
+<img src="images/AdActivity_editParcel.png"
+    alt="AdActivity with edit Parcel"
+     style="float: left; margin-right: 10px;" />
+
+The ad_edit Parcel is being sent from the UserAdsActivity (this activity will be explained in the following chapter), when an ad is clicked on the RecyclerView. This parcel makes sure, that the user, that has created this ad, is able to make changes.
+
+In addition that, the user can also decide to delete this ad. This can be achieved by clicking in the delete button on the top-right. This then removes the saved data under this key from the Firebase Realtime Database.
+
+### UserAdsActivity
+
+This is the current design of the UserAdsActivity:
+
+<img src="images/UserAdsActivity.png"
+    alt="UserAdsActivity"
+     style="float: left; margin-right: 10px;" />
+
+This activity only display ads that have been created by the currently logged-in user. This is done by saving the userID (from the Firebase Authentification Databse) with each ad in the Firebase Realtime Database.
+
+To correctly fill the RecyclerView, the list that is handed over to the Adapter is changed accordingly. It takes the current snapshot from the Realtime Database and if the userID of the stored ad does not match the current user's userID, then this ad is not added to the list.
+
+### ProfileActivity
+
+This is the current design of the ProfileActivity:
+
+<img src="images/ProfileActivity.png"
+    alt="ProfileActivity"
+     style="float: left; margin-right: 10px;" />
+
+The ProfileActivity displays the currently logged-in user's information that has been saved with the creation of the account. The user can also make changes to their account here. 
+
+<ins>Possible changes:<ins>
+- Profile Picture
+- Username
+
+So far only those two aspects can be changed. The changes are then adjusted in the Firebase Authentification Database as well.
+
+In the future it would make sense to add the feature to change the creditentials (email, password) as well.
+
+### Navigating between Activites
+
+For navigation purposes a Navigation Drawer is implemented. 
+
+<ins>Visible on the following activities:<ins>
+- HomeActivity
+- AdListActivity
+- UserAdsActivity
+- ProfileActivity
+
+This is the current design of the Navigation Drawer:
+
+<img src="images/NavigationDrawer.png"
+    alt="NavigationDrawer"
+     style="float: left; margin-right: 10px;" />
+
+The NavDrawer can be opened through swiping from left to right on the screen or by clicking the Burger symbol on the top-left.
+
+<ins>The NavDrawer includes the following items:<ins>
+- Home -> HomeActivity
+- Profile -> ProfileActivity
+- Your Ads -> UserAdsActivity
+- Account settings
+  - Login -> LoginActivity
+  - Logout -> HomeActivity (user gets signed-out)
+  - Sign-Up -> SignUpActivity
+
+If the user is for example alreay on the HomeActivity but selects the Home item, nothing will happen. This is done for each activity in the same manner.
+
+## Firebase
+
+For the storage of data in every aspect Firebase was used. As mentioned throught this file, currently two databases are used. The Authentification DB and the Realtime DB.
+
+The Authentification DB stores all the active accounts. They can also be manually deleted again from the system, but only by using the Firebase console.
+
+The Realtime DB stores all the ads that have been posted to the system. 
+
+### Realtime Database structure
+
+This shows an example of how the DB is strucutred. The key for each post is a randomly generated key by Firebase. This key is then also saved in the ad itself, to later used it to find the post for a specific ad.
+
+<img src="images/RealtimeDB_structure.png"
+    alt="NavigationDrawer"
+     style="float: left; margin-right: 10px;" />
 
 
 
+### Code
 
+In this section only a small amount of the actual code is displayed. But it will give a small overview of what was used in the development of this app.
+
+It will focus on the code that uses the Firebase API.
+
+To add the Firebase to the project, the following guide was used:
+https://firebase.google.com/docs/android/setup
+
+#### Authentification
+
+<ins>Initialization<ins>
+
+Following variable is needed:
+
+```kotlin
+private lateinit var auth: FirebaseAuth
+```
+
+```kotlin
+auth = FirebaseAuth.getInstance()
+```
+
+<ins>Sign-Up Process:<ins>
+```kotlin
+auth.createUserWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
+                        if(task.isSuccessful){
+                            if(img != null){
+                                addUserImgAndUsername(img)
+                            }else{
+                                addUsername()
+                            }
+                            Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@SignUpActivity, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }else {
+                            emailAlreadyUsed()
+                        }
+                    })
+```
+The createUserWithEMailAndPassword method creates a new user in the Authentification DB. Since I used this way of authentification, the  profile picutre and username are normally not added to the account. They have to be added manually. 
+
+This is done by the two methods:
+- addUserImgAndUsername(image : URI)
+- addUsername
+
+both of these methods call the updateProfile method that adjust the user account again.
+
+Example: addUsername()
+
+```kotlin
+private fun addUsername(){
+        if(auth.currentUser != null){
+            val profileUpdates = userProfileChangeRequest {
+                displayName = binding.username.text.toString()
+            }
+
+            auth.currentUser!!.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if(task.isSuccessful) {
+                        i("Username has been updated")
+                    }
+                }
+        }
+    }
+```
+
+<ins>Login Process<ins>
+
+```kotlin
+auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        binding.errorText.text = "Email or password incorrect"
+                        binding.errorText.visibility = View.VISIBLE
+                    }
+                })
+```
+
+The login is done by using the signInWithEmailAndPassword method. This compares the ceditentials that have been entered with the Authentification DB. If a user is found, that matches the information, then they will be logged-in. Otherwise an error text will be displayed.
+
+<ins>Logout Process<ins>
+
+```kotlin
+auth.signOut()
+```
+
+To logout the current user, the signOut method has to be called on FirebaseAuth object.
+
+#### Pushing ads
+
+For the method below I used the following guide:
+https://www.kodeco.com/books/saving-data-on-android/v1.0/chapters/13-reading-to-writing-from-realtime-database
+
+```kotlin
+private fun writeNewAd(){
+        key = database.push().key ?: ""
+        ad.id = key
+        var newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree, ad.adImg,
+                    auth.currentUser?.uid)
+
+        database.child(key)
+            .setValue(newAd)
+    }
+```
+
+First of all this methos gets a push key from Firebase. This is important since the ad needs to store this information as well. Therefore, the ad.id. is set to the just generated key.
+
+The whole ad then gets pushed to the Realtime DB under the key that has been created in the beginning.
+
+#### Updating ads
+
+```kotlin
+private fun updateAd(){
+        val updatedAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree, ad.adImg,
+                        auth.currentUser?.uid)
+
+        key = ad.id.toString()
+       
+        database.child(key).setValue(updatedAd)
+    }
+```
+
+To update an ad, the push key is needed again. Through this key, which is stored in the ad.id the ad can be found.
+
+Currently, the updateAd method overrides the whole ad again.
+
+#### Deleting ads
+
+```kotlin
+private fun deleteAd() {
+        key = ad.id.toString()
+        database.child(key).removeValue()
+}   
+```
+To delete an ad, the push key is needed once again. Through this key, the selected ad can be found in the Realtime DB and then removed through the removeValue method.
+
+## Messanger
+
+As of right now, no messanger has been implemented. But it is planned to do so using Firebase once again.
+The following guide will be used for this:
+https://firebase.google.com/codelabs/firebase-android#0
+
+## Tests
+
+As of right now, no tests have been implemented. But is planned to do so using the following guide:
+https://developer.android.com/training/testing/fundamentals
 
 ## References
-For the Login and the connection to Firebase I used the offical documentation from firebase.
-For reference this is the link to this guide: https://firebase.google.com/docs/android/setup
+
+All references of guides or stackOverflow posts can be found in the Code documentation of this project.
+
+## Author
+
+[![Ines -Maria Bohr](images/Author_pic.jpg)](https://github.com/boini12)
+
