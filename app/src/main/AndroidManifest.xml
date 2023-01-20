@@ -14,8 +14,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GreenCommunity"
+        android:theme="@style/Theme.GreenCommunity.NoActionBar"
         tools:targetApi="31">
+        <!-- this line is added to make the app full-screen
+            Link: https://stackoverflow.com/questions/70948103/how-adjust-my-app-in-android-11-in-cell-phone-screen/72817062#72817062
+            last accessed: 20.01.2023
+        -->
+        <meta-data android:name="android.max_aspect" android:value="2.4"/>
         <activity
             android:name=".activities.UserAdsActivity"
             android:exported="false">
