@@ -39,6 +39,13 @@ class AdAdapter(private var ads: ArrayList<AdModel>, private val listener: AdLis
             }
 
             holder.ad_img.setImageURI(ad.adImg?.toUri())
+            /**
+             * for the code in line 45 I used the following link as reference
+             * Link: https://stackoverflow.com/questions/33283493/recyclerview-recycled-viewholder-image-view-wrong-size
+             * Last accessed: 20.01.2022
+             * This code is needed in order to fit the images of the ads properly to the view
+             */
+            holder.ad_img.adjustViewBounds = true
             holder.bind(ad, listener)
     }
 
