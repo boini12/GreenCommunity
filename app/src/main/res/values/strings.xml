@@ -31,5 +31,6 @@
     <string name="button_changePassword">Change Password</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="password_again">Enter Password Again</string>
 
 </resources>
