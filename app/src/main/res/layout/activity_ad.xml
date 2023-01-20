@@ -83,7 +83,7 @@
                     android:autofillHints="hint"
                     android:hint="@string/hint_adDescription"
                     android:inputType="textMultiLine"
-                    android:maxLength="100"
+                    android:maxLength="500"
                     android:maxLines="3"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
