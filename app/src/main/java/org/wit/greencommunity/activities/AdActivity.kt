@@ -250,7 +250,7 @@ class AdActivity : AppCompatActivity() {
                 deleteAd()
                 setResult(RESULT_OK)
                 finish()
-                val intent = Intent(this, AdListActivity::class.java)
+                val intent = Intent(this, UserAdsActivity::class.java)
                 startActivity(intent)
             }
             R.id.item_cancel -> {
@@ -272,6 +272,7 @@ class AdActivity : AppCompatActivity() {
 
 
     private fun deleteAd() {
+        key = ad.id.toString()
         database.child(key).removeValue()
     }
 
