@@ -5,44 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".activities.SignUpActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <include
+        android:id="@+id/appToolbar"
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        app:elevation="0dip"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:ignore="MissingConstraints">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:titleTextColor="@color/colorPrimary" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <TextView
-        android:id="@+id/signUp_text"
-        android:layout_width="357dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="72dp"
-        android:text="@string/text_SignUp"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_width="324dp"
-        android:layout_height="439dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="332dp"
+        android:layout_height="525dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp_text">
+        app:layout_constraintTop_toBottomOf="@+id/appToolbar">
 
         <EditText
             android:id="@+id/username"
@@ -66,6 +42,14 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:hint="@string/signUp_password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/passwordAgain"
+            android:layout_width="320dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:hint="@string/password_again"
             android:inputType="textPassword" />
 
         <Button
@@ -92,10 +76,11 @@
         android:id="@+id/btn_signUp"
         android:layout_width="278dp"
         android:layout_height="73dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="44dp"
         android:text="@string/button_signUp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

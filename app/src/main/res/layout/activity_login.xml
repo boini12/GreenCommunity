@@ -5,31 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".activities.LoginActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <include
+        android:id="@+id/appToolbar"
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="true"
-        app:elevation="0dip"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:ignore="MissingConstraints">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:titleTextColor="@color/colorPrimary" />
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/login_text"
+        android:id="@+id/error_text"
         android:layout_width="357dp"
         android:layout_height="38dp"
         android:layout_marginTop="72dp"
-        android:text="@string/text_login"
         android:textAlignment="center"
-        android:textSize="30dp"
+        android:textColor="@color/colorError"
+        android:textSize="20dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +32,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_text">
+        app:layout_constraintTop_toBottomOf="@+id/error_text">
 
         <EditText
             android:id="@+id/email"

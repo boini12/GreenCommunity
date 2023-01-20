@@ -56,6 +56,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /**
+         * To get the string from the String resources I used the following link to create the method below in line 66
+         * Link: https://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
+         * Last accessed: 20.01.2023
+         */
+        binding.appToolbar.toolbar.title = resources.getString(R.string.app_name)
         setSupportActionBar(binding.appToolbar.toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -72,9 +79,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         auth = FirebaseAuth.getInstance()
 
         app = application as MainApp
-
-
-
 
         i("GreenCommunity Application has been started")
 
@@ -129,20 +133,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
      */
 
-
-
-
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser != null){
-                    // nothing happens
-                }else{
-                    intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -168,13 +163,18 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(auth.currentUser != null){
                     auth.signOut()
                     Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
-                    Timber.i("User has been logged out")
+                    i("User has been logged out")
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "No user logged in", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.home -> {
-                intent = Intent(this, HomeActivity::class.java)
+                //nothing should happen
+            }
+            R.id.signup -> {
+                intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
             }
         }

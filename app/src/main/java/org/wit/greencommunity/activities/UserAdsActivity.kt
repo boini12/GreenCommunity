@@ -35,6 +35,8 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
         super.onCreate(savedInstanceState)
         binding = ActivityAdListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.title_userAds)
         setSupportActionBar(binding.appToolbar.toolbar)
 
         app = application as MainApp
@@ -117,13 +119,8 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser != null){
-                    // nothing happens
-                }else{
-                    intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -136,14 +133,7 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
                 }
             }
             R.id.ads -> {
-                if(auth.currentUser != null){
-                    intent = Intent(this, UserAdsActivity::class.java)
-                    startActivity(intent)
-                }else{
-                    Toast.makeText(this, "You need to log in in order to see your ads", Toast.LENGTH_LONG).show()
-                    intent = Intent(this, LoginOrSignUpActivity::class.java)
-                    startActivity(intent)
-                }
+                // nothing should happen
             }
             R.id.logout -> {
                 if(auth.currentUser != null){
@@ -152,10 +142,16 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
                     Timber.i("User has been logged out")
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "No user logged in", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.home -> {
                 intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.signup -> {
+                intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
             }
         }

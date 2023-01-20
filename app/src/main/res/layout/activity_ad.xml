@@ -95,14 +95,14 @@
 
                     <CheckBox
                         android:id="@+id/adFree"
-                        android:layout_width="227dp"
-                        android:layout_height="77dp"
+                        android:layout_width="146dp"
+                        android:layout_height="85dp"
                         android:text="Ad is Free" />
 
                     <EditText
                         android:id="@+id/adPrice"
-                        android:layout_width="217dp"
-                        android:layout_height="68dp"
+                        android:layout_width="237dp"
+                        android:layout_height="88dp"
                         android:layout_margin="8dp"
                         android:autofillHints="hint"
                         android:enabled="true"

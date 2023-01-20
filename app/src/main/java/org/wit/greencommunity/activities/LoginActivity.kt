@@ -2,10 +2,12 @@ package org.wit.greencommunity.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import org.wit.greencommunity.R
 import org.wit.greencommunity.databinding.ActivityLoginBinding
 import org.wit.greencommunity.main.MainApp
 import timber.log.Timber
@@ -29,7 +31,9 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarAdd)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.text_login)
+        setSupportActionBar(binding.appToolbar.toolbar)
 
         app = application as MainApp
 
@@ -44,18 +48,40 @@ class LoginActivity : AppCompatActivity() {
              * Last opened: 29.11.2022
              */
 
-            auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
-                if(task.isSuccessful){
-                    Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }else{
-                    Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
-                }
-            })
+            if((validateEmail() || validatePassword()) && validatePassword() && validateEmail()){
+
+                auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        binding.errorText.text = "Email or password incorrect"
+                        binding.errorText.visibility = View.VISIBLE
+                    }
+                })
+            }
+
         }
 
     }
+
+    private fun validateEmail() : Boolean {
+        if(binding.email.text.isEmpty()){
+            binding.email.error = "Please enter an email"
+            return false
+        }
+        return true
+    }
+
+    private fun validatePassword() : Boolean {
+        if(binding.password.text.isEmpty()){
+            binding.password.error = "Please enter a password"
+            return false
+        }
+        return true
+    }
+
 
 }
