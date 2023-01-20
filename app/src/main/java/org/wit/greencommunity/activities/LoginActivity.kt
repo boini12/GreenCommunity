@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
              */
 
             if((validateEmail() || validatePassword()) && validatePassword() && validateEmail()){
+
                 auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
                     if(task.isSuccessful){
                         Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
@@ -61,15 +62,6 @@ class LoginActivity : AppCompatActivity() {
                     }
                 })
             }
-
-            /*
-            if(auth.currentUser != null){
-                auth.signOut()
-            }
-
-             */
-
-
 
         }
 

@@ -54,10 +54,6 @@ class SignUpActivity : AppCompatActivity() {
 
             binding.btnSignUp.setOnClickListener(){
 
-                if(auth.currentUser != null){
-                    auth.signOut()
-                }
-
                 /**
                  * For the login method I used code from this website:
                  * Link: https://blog.mindorks.com/firebase-login-and-authentication-android-tutorial [section: Register a user with email and password]

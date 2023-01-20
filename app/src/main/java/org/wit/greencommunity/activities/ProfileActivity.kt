@@ -180,23 +180,11 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser != null){
-                    // nothing happens
-                }else{
-                    intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.profile -> {
-                if(auth.currentUser != null){
-                    intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                }else{
-                    Toast.makeText(this, "You need to log in in order to see your profile", Toast.LENGTH_LONG).show()
-                    intent = Intent(this, LoginOrSignUpActivity::class.java)
-                    startActivity(intent)
-                }
+                //nothing should happen
             }
             R.id.ads -> {
                 if(auth.currentUser != null){
@@ -215,12 +203,17 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     i("User has been logged out")
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "No user logged in", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.home -> {
                 intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
-
+            }
+            R.id.signup -> {
+                intent = Intent(this, SignUpActivity::class.java)
+                startActivity(intent)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

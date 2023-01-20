@@ -133,10 +133,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
      */
 
-
-
-
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
@@ -167,7 +163,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(auth.currentUser != null){
                     auth.signOut()
                     Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
-                    Timber.i("User has been logged out")
+                    i("User has been logged out")
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                 }else{
@@ -175,8 +171,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.home -> {
-                intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
+                //nothing should happen
             }
             R.id.signup -> {
                 intent = Intent(this, SignUpActivity::class.java)

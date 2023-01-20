@@ -183,13 +183,8 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser != null){
-                    // nothing happens
-                }else{
-                    intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -215,13 +210,19 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                 if(auth.currentUser != null){
                     auth.signOut()
                     Toast.makeText(this, "Successfully logged out", Toast.LENGTH_LONG).show()
-                    Timber.i("User has been logged out")
+                    i("User has been logged out")
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "No user logged in", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.home -> {
                 intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.signup -> {
+                intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
             }
         }
