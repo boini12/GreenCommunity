@@ -170,6 +170,51 @@ If the sign-up was not successful, information in form of Toast messages are dis
 
 This is the current design of the AdListActivity:
 
+<img src="images/AdListActivity.png"
+    alt="AdListActivity"
+     style="float: left; margin-right: 10px;" />
+
+The AdListActivity displays all the ads that are in a 5km radius of the current Location of the device. The RecyclerView shows the ads in a CardView. Each ad is displayed with an image (if one was uploaded), the title of the ad (in bold) and the price, if the ad is not free. If the ad was has the Checkbox isFree checked, then the Card will have a FREE text.
+
+From here the user can select any of the ads that are displayed to open the AdActivity (with the parcel ad_view). This activity will be in the next chapter. 
+
+Furthermore, the user can also create new ads by pressing the + icon in the top-right corner. This also redirects the user to the AdActivity with no parcel.
+
+### AdActivity
+
+<ins>Parcls that exist:<ins>
+- ad_view
+- ad_edit
+
+#### No Parcel
+
+This is the current design of the AdActivity, if no Parcel is sent:
+
+<img src="images/AdActivity_noParcel.png"
+    alt="AdActivity with no Parcel"
+     style="float: left; margin-right: 10px;" />
+
+If no parcel has been sent, then a new ad is being created.
+
+<ins>A new ad can contain the following information:<ins>
+- image
+- title*
+- description
+- isFree* (CheckBox)
+- Price*
+
+The ones marked with * are needed in order to be able to post the ad.
+
+When the user presses the add image button, they will be redirected to their photos on their device. This is done by using an ImagePicker.
+
+When the Checkbox isFree is checked, the price will automatically be set to 0.0 and the EditText will not be clickable anymore.
+
+If the CheckBox is not checked, but the user still enters a price of 0, then the Checkbox will be automatically checked, when the ad is posted.
+
+#### ad_view Parcel
+
+This is the current design of the AdActivity, if the ad_view Parcel is being send:
+
 
 
 
