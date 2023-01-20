@@ -1,18 +1,29 @@
 <resources>
+    <!-- General -->
     <string name="app_name">GreenCommunity</string>
+
+    <!-- AdActivity -->
     <string name="button_addAd">Add new Ad</string>
     <string name="hint_adTitle">Title</string>
     <string name="hint_adDescription">Description</string>
-    <string name="button_explore">Explore Ads in your Area</string>
     <string name="hint_adPrice">Price</string>
     <string name="menu_cancelAd">Cancel</string>
+
+    <!-- HomeActivity -->
+    <string name="button_explore">Explore Ads in your Area</string>
+
+    <!-- AdListActivity -->
     <string name="menu_addAd">Add</string>
+
+    <!-- SignUpActivity -->
     <string name="signUp_email">E-mail</string>
     <string name="signUp_username">Username</string>
     <string name="signUp_password">Passwort</string>
     <string name="button_signUp">Sign-Up</string>
-    <string name="button_login">Login</string>
     <string name="text_SignUp">Sign-Up</string>
+    <!-- LoginActivity -->
+    <string name="button_login">Login</string>
+
     <string name="text_NotLoggedIn">You are not logged in yet</string>
     <string name="text_ChooseOption">Login or Sign-up</string>
     <string name="text_login">Login</string>
@@ -32,5 +43,8 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="password_again">Enter Password Again</string>
+    <string name="adList_title">Ads in your area</string>
+    <string name="title_userAds">Your ads</string>
+
 
 </resources>

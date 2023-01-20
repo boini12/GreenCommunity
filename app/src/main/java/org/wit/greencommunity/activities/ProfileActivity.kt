@@ -52,6 +52,8 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.text_profile)
         setSupportActionBar(binding.appToolbar.toolbar)
 
         Timber.i("ProfileActivity has started")

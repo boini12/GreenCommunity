@@ -54,6 +54,8 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
         binding = ActivityAdListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.adList_title)
         setSupportActionBar(binding.appToolbar.toolbar)
         
         app = application as MainApp

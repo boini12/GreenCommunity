@@ -38,8 +38,9 @@ class SignUpActivity : AppCompatActivity() {
 
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarAdd)
-        binding.toolbarAdd.setTitle(R.string.button_signUp)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.text_SignUp)
+        setSupportActionBar(binding.appToolbar.toolbar)
 
         img = Uri.EMPTY
 

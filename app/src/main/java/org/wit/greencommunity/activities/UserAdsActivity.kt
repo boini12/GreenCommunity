@@ -35,6 +35,8 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
         super.onCreate(savedInstanceState)
         binding = ActivityAdListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.title_userAds)
         setSupportActionBar(binding.appToolbar.toolbar)
 
         app = application as MainApp

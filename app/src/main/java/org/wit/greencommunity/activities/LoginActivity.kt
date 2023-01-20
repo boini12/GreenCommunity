@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import org.wit.greencommunity.R
 import org.wit.greencommunity.databinding.ActivityLoginBinding
 import org.wit.greencommunity.main.MainApp
 import timber.log.Timber
@@ -30,7 +31,9 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarAdd)
+
+        binding.appToolbar.toolbar.title = resources.getString(R.string.text_login)
+        setSupportActionBar(binding.appToolbar.toolbar)
 
         app = application as MainApp
 

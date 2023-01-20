@@ -5,33 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProfileActivity">
 
-    <TextView
-        android:id="@+id/text_profile"
-        android:layout_width="357dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="72dp"
-        android:text="@string/text_profile"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="353dp"
         android:layout_height="460dp"
         android:layout_marginTop="32dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_change"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_profile">
+        >
 
         <ImageView
             android:id="@+id/profileImg"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="106dp"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <EditText
@@ -51,7 +39,6 @@
             android:inputType="textEmailAddress" />
 
 
-
         <Button
             android:id="@+id/btn_changeImg"
             android:layout_width="match_parent"
@@ -63,8 +50,6 @@
             android:text="@string/button_changeImg"
             android:textColor="@color/white"
             android:textSize="16sp" />
-
-
 
 
     </LinearLayout>

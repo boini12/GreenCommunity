@@ -56,6 +56,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        /**
+         * To get the string from the String resources I used the following link to create the method below in line 66
+         * Link: https://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
+         * Last accessed: 20.01.2023
+         */
+        binding.appToolbar.toolbar.title = resources.getString(R.string.app_name)
         setSupportActionBar(binding.appToolbar.toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -72,9 +80,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         auth = FirebaseAuth.getInstance()
 
         app = application as MainApp
-
-
-
 
         i("GreenCommunity Application has been started")
 
