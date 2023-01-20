@@ -2,6 +2,7 @@ package org.wit.greencommunity.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
@@ -51,7 +52,8 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }else{
-                    Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show()
+                    binding.errorText.text = "Email or password incorrect"
+                    binding.errorText.visibility = View.VISIBLE
                 }
             })
         }

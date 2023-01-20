@@ -23,13 +23,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/login_text"
+        android:id="@+id/error_text"
         android:layout_width="357dp"
         android:layout_height="38dp"
         android:layout_marginTop="72dp"
-        android:text="@string/text_login"
         android:textAlignment="center"
-        android:textSize="30dp"
+        android:textColor="@color/colorError"
+        android:textSize="20dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_text">
+        app:layout_constraintTop_toBottomOf="@+id/error_text">
 
         <EditText
             android:id="@+id/email"
