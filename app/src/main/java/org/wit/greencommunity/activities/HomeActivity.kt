@@ -57,7 +57,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         /**
          * To get the string from the String resources I used the following link to create the method below in line 66
          * Link: https://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
@@ -141,13 +140,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.login -> {
-                if(auth.currentUser != null){
-                    // nothing happens
-                }else{
-                    intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.profile -> {
                 if(auth.currentUser != null){
@@ -176,10 +170,16 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Timber.i("User has been logged out")
                     intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "No user logged in", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.home -> {
                 intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.signup -> {
+                intent = Intent(this, SignUpActivity::class.java)
                 startActivity(intent)
             }
         }

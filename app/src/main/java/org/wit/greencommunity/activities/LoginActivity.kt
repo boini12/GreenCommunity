@@ -48,19 +48,48 @@ class LoginActivity : AppCompatActivity() {
              * Last opened: 29.11.2022
              */
 
-            auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
-                if(task.isSuccessful){
-                    Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }else{
-                    binding.errorText.text = "Email or password incorrect"
-                    binding.errorText.visibility = View.VISIBLE
-                }
-            })
+            if((validateEmail() || validatePassword()) && validatePassword() && validateEmail()){
+                auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        binding.errorText.text = "Email or password incorrect"
+                        binding.errorText.visibility = View.VISIBLE
+                    }
+                })
+            }
+
+            /*
+            if(auth.currentUser != null){
+                auth.signOut()
+            }
+
+             */
+
+
+
         }
 
     }
+
+    private fun validateEmail() : Boolean {
+        if(binding.email.text.isEmpty()){
+            binding.email.error = "Please enter an email"
+            return false
+        }
+        return true
+    }
+
+    private fun validatePassword() : Boolean {
+        if(binding.password.text.isEmpty()){
+            binding.password.error = "Please enter a password"
+            return false
+        }
+        return true
+    }
+
 
 }
