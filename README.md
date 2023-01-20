@@ -43,8 +43,10 @@ The following topics will be covered in the following part:
 * Firebase
     * Realtime Database Structure
     * Code
+      * Authentification
+      * Realtime DB
     
-* Messanger
+* Messenger
   
 * Tests
 
@@ -409,7 +411,9 @@ auth.signOut()
 
 To logout the current user, the signOut method has to be called on FirebaseAuth object.
 
-#### Pushing ads
+#### Realtime DB
+
+<ins>Pushing ads<ins>
 
 For the method below I used the following guide:
 https://www.kodeco.com/books/saving-data-on-android/v1.0/chapters/13-reading-to-writing-from-realtime-database
@@ -430,7 +434,7 @@ First of all this methos gets a push key from Firebase. This is important since 
 
 The whole ad then gets pushed to the Realtime DB under the key that has been created in the beginning.
 
-#### Updating ads
+<ins>Updating ads<ins>
 
 ```kotlin
 private fun updateAd(){
@@ -447,7 +451,7 @@ To update an ad, the push key is needed again. Through this key, which is stored
 
 Currently, the updateAd method overrides the whole ad again.
 
-#### Deleting ads
+<ins>Deleting ads<ins>
 
 ```kotlin
 private fun deleteAd() {
@@ -457,9 +461,9 @@ private fun deleteAd() {
 ```
 To delete an ad, the push key is needed once again. Through this key, the selected ad can be found in the Realtime DB and then removed through the removeValue method.
 
-## Messanger
+## Messenger
 
-As of right now, no messanger has been implemented. But it is planned to do so using Firebase once again.
+As of right now, no messenger has been implemented. But it is planned to do so using Firebase once again.
 The following guide will be used for this:
 https://firebase.google.com/codelabs/firebase-android#0
 
