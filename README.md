@@ -473,6 +473,5 @@ https://developer.android.com/training/testing/fundamentals
 All references of guides or stackOverflow posts can be found in the Code documentation of this project.
 
 ## Author
-
-[![Ines -Maria Bohr](images/Author_pic.jpg)](https://github.com/boini12)
+[<img alt="author" width="40px" src="images/Author_pic.jpg" />](https://github.com/boini12)
 
