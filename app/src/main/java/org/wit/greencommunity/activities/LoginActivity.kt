@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
         Timber.i("SignUpActivity has started")
 
-        binding.btnSignUp.setOnClickListener(){
+        binding.btnLogin.setOnClickListener(){
 
             /**
              * For the login method I used code from this website:
@@ -63,6 +63,24 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+        /**
+         * To reset a password of an account, I used the following guide:
+         * Link: https://blog.mindorks.com/firebase-login-and-authentication-android-tutorial [section: Send the change password link to email]
+         * Last opened: 29.11.2022
+         */
+
+        binding.btnForgotPassword.setOnClickListener() {
+
+            if(validateEmail()){
+                auth.sendPasswordResetEmail(binding.email.text.toString()).addOnCompleteListener { task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(this, "Reset link sent to your email", Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(this, "Unable to send reset mail", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun validateEmail() : Boolean {
