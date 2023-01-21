@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomButton">
+
+        <item name="background">@color/colorPrimary</item>
+        <item name="android:paddingTop">@dimen/padding</item>
+        <item name="android:paddingBottom">@dimen/padding</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_button</item>
+        <item name="android:stateListAnimator">@null</item>
+
+    </style>
+
+</resources>

@@ -9,9 +9,9 @@
 
     <include
         android:id="@+id/appToolbar"
-        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        layout="@layout/app_bar_main"
         />
 
     <TextView
@@ -19,14 +19,11 @@
         android:layout_width="357dp"
         android:layout_height="38dp"
         android:layout_marginTop="72dp"
-        android:textAlignment="center"
-        android:textColor="@color/colorError"
-        android:textSize="20dp"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        style="@style/CustomErrorText"
         />
 
     <LinearLayout
@@ -48,6 +45,7 @@
             android:layout_margin="15dp"
             android:hint="@string/login_email"
             android:inputType="textEmailAddress"
+            style="@style/CustomEditText"
             />
 
         <EditText
@@ -57,6 +55,7 @@
             android:layout_margin="15dp"
             android:hint="@string/login_password"
             android:inputType="textPassword"
+            style="@style/CustomEditText"
             />
 
     </LinearLayout>
@@ -72,6 +71,7 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        style="@style/CustomButton"
         />
 
     <Button
@@ -83,6 +83,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        style="@style/CustomButton"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

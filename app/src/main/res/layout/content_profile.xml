@@ -30,7 +30,7 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:hint="@string/signUp_username"
-            android:inputType="text"
+            style="@style/CustomEditText"
             />
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:hint="@string/signUp_email"
-            android:inputType="textEmailAddress"
+            style="@style/CustomTextView"
             />
 
 
@@ -68,6 +68,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        style="@style/CustomButton"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

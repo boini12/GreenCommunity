@@ -31,13 +31,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Title Placeholder"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp"
+                android:text="@string/title_placeholder"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="5dp"
+                android:textStyle="normal"
+                style="@style/CardPrice"
                 />
 
             <TextView
@@ -45,16 +43,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Title Placeholder"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp"
-                android:textStyle="bold"
+                android:text="@string/title_placeholder"
                 card_view:layout_constraintBottom_toTopOf="@+id/adPrice"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintVertical_bias="1.0"
                 tools:layout_editor_absoluteX="10dp"
+                style="@style/CardTitle"
                 />
 
             <ImageView

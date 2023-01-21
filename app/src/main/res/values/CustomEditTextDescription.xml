@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomEditTextDescription">
+
+        <item name="android:autofillHints">hint</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/font_edittext</item>
+        <item name="android:maxLines"></item>
+        <item name="android:maxLength">500</item>
+
+    </style>
+
+</resources>

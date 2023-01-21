@@ -8,6 +8,7 @@
     <string name="hint_adDescription">Description</string>
     <string name="hint_adPrice">Price</string>
     <string name="menu_cancelAd">Cancel</string>
+    <string name="ad_is_free">Add is Free</string>
 
     <!-- HomeActivity -->
     <string name="button_explore">Explore Ads in your Area</string>
@@ -53,6 +54,7 @@
 
     <!-- UserAdsActivity -->
     <string name="title_userAds">Your ads</string>
+    <string name="title_placeholder">Title Placeholder</string>
 
 
 </resources>
