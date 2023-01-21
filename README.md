@@ -524,7 +524,9 @@ For the implementation of a Navigation Drawer, I used the following guide:
 
 https://www.androidhire.com/navigation-drawer-in-kotlin-android/
 
+For the plant in the logo of the app and also in the default profile / ad picture I used the following Vector:
 
+https://www.freepik.com/free-vector/plant-emoji_34294721.htm
 
 
 ## Author
