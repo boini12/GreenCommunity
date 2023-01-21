@@ -11,6 +11,7 @@
 
     <!-- HomeActivity -->
     <string name="button_explore">Explore Ads in your Area</string>
+    <string name="text_choseRadius">Choose distance (km)</string>
 
     <!-- AdListActivity -->
     <string name="menu_addAd">Add</string>

@@ -27,6 +27,7 @@ import org.wit.greencommunity.adapter.AdListener
 import org.wit.greencommunity.databinding.ActivityAdListBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
+import org.wit.greencommunity.models.DistanceModel
 import timber.log.Timber.i
 
 /**
@@ -45,6 +46,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     private val PERMISSION_ID = 42
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
     private lateinit var location: Location
+    private lateinit var distanceModel: DistanceModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +77,18 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
         adList = arrayListOf()
 
+        distanceModel = DistanceModel()
+
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, binding.appToolbar.toolbar, 0, 0
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
+
+        if(intent.hasExtra("distance")){
+            this.distanceModel = intent.extras?.getParcelable("distance")!!
+        }
 
     }
 
@@ -108,14 +116,13 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                 if (snapshot.exists()) {
 
                     for (list in snapshot.children) {
-                        val radiusInMeters = 5000
                         var distance= FloatArray(3)
 
                         val data = list.getValue(AdModel::class.java)
-
                         if (data != null) {
                             Location.distanceBetween(this@AdListActivity.location.latitude, this@AdListActivity.location.longitude, data.latitude, data.longitude, distance)
-                            if(distance[0] <= radiusInMeters){
+                            if(distance[0] <= this@AdListActivity.distanceModel.chosenDistance * 1000){
+                                i("distance: " + this@AdListActivity.distanceModel.chosenDistance)
                                 adList.add(data)
                             }
                         }
