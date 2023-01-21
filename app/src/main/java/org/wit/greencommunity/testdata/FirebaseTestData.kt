@@ -5,6 +5,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import org.wit.greencommunity.models.AdModel
 
+/**
+ * The whole purpose of this class is to add some sample ads to the Realtime Database
+ * An object of this class used to be implemented in the MainApp and would call [testAdModels]
+ */
+
 class FirebaseTestData {
 
     private lateinit var auth: FirebaseAuth

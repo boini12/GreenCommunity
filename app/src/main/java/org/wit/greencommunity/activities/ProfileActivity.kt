@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -13,16 +12,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.squareup.picasso.Picasso
 import org.wit.greencommunity.R
-import org.wit.greencommunity.adapter.adjustNavHeader
 import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityProfileBinding
 import org.wit.greencommunity.main.MainApp
@@ -31,9 +27,8 @@ import timber.log.Timber
 import timber.log.Timber.i
 
 /**
- * This is the ProfileActivity of the GreenCommunity Application
- * Here a user can see all his current information that is saved in Firebase
- * A user has the chance to make changes to his/her profile and those changes are updated in Firebase
+ * In the ProfileActivity a user can see all their current information that is saved in the Realtime Database
+ * A user has the chance to make changes to their profile and those changes are updated in Firebase
  */
 
 class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
@@ -84,7 +79,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         user.let {
             binding.profileActivity.username.setText(user.displayName)
-            binding.profileActivity.email.setText(user.email)
+            binding.profileActivity.email.text = user.email
 
         }
         Picasso.get()
@@ -93,6 +88,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .into(binding.profileActivity.profileImg)
 
         userModel = UserModel(binding.profileActivity.username.text.toString(), binding.profileActivity.email.text.toString(), "", null)
+
+        /**
+         * For the addTextChangedListener I used the following guide:
+         * Link: https://www.tutorialkart.com/kotlin-android/android-edittext-on-text-change/
+         * Last accessed: 21.01.2023
+         */
 
         binding.profileActivity.username.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -114,8 +115,13 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
         registerImagePickerCallback()
 
-        binding.profileActivity.btnChange.setOnClickListener{
+        /**
+         * to update the data in the Authentication Database, I used the following guide
+         * Link: https://firebase.google.com/docs/auth/android/manage-users [Section: Update a user's profile]
+         * Last accessed: 21.01.2023
+         */
 
+        binding.profileActivity.btnChange.setOnClickListener{
 
             val profileUpdates = userProfileChangeRequest {
                 photoUri = img
@@ -125,31 +131,12 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             user.updateProfile(profileUpdates)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
-                        Timber.i("User has been updated")
+                        i("User has been updated")
                     }
                 }
         }
 
     }
-
-    /*
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_profile,menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.item_home ->{
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-     */
-
-
 
     private fun registerImagePickerCallback(){
         imageIntentLauncher =

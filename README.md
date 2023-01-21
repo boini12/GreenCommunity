@@ -413,6 +413,13 @@ To logout the current user, the signOut method has to be called on FirebaseAuth 
 
 #### Realtime DB
 
+To access the Realtime DB a DatabaseReference is needed
+
+```kotlin
+private lateinit var database : DatabaseReference
+database = FirebaseDatabase.getInstance("url to database").getReference("posts")
+```
+
 <ins>Pushing ads<ins>
 
 For the method below I used the following guide:
@@ -474,7 +481,53 @@ https://developer.android.com/training/testing/fundamentals
 
 ## References
 
-All references of guides or stackOverflow posts can be found in the Code documentation of this project.
+All references of guides or stackOverflow posts can be found in the Code documentation of this project. But they will also be listed in this file.
+
+For the writeNewAd() method from the AdActivity the following guide was used:
+
+https://www.kodeco.com/books/saving-data-on-android/v1.0/chapters/13-reading-to-writing-from-realtime-database
+
+For the deleteAd() method from the AdActivity I used the official Firebase documentation -> delete data
+
+https://firebase.google.com/docs/database/android/read-and-write
+
+For all the methods, that I used in order to get the current Location of the device I followed the following guide:
+
+https://www.androidhire.com/current-location-in-android-using-kotlin/
+
+In the AdListActivity I used an answer from stackoverflow to get a current Snapshot of my Realtime Database and add them to a list, that I can pass to the RecyclerView. I made small adjustments to the code presented in the link. For example, I only want ads to be added to the list, that are in a certain radius around the current location of the device.
+
+https://stackoverflow.com/questions/69238874/how-can-i-retrieve-firebase-data-and-implement-it-to-recycler-view
+
+To set the Title for the toolbar, I added strings to the strings.xml file. To get those strings in the code of an activity I used the following stackoverflow post:
+
+https://stackoverflow.com/questions/7493287/android-how-do-i-get-string-from-resources-using-its-name
+
+To achieve a login and signup through Firebase Authentification, I used the following blog post:
+
+https://blog.mindorks.com/firebase-login-and-authentication-android-tutorial [section: Login a user with email and password]
+
+To add the CardView to my AdListActivity, I used the following guide:
+
+https://www.youtube.com/watch?v=tbj5VH-KzFM&t=1s
+
+For the addTextChangedListener in the ProfileActivity, I used the following guide:
+
+https://www.tutorialkart.com/kotlin-android/android-edittext-on-text-change/
+
+
+To display errors in the EditTexts, I uesed the following StackOverflow post:
+
+https://stackoverflow.com/questions/44963165/how-to-set-text-focus-error-on-edittext-in-android-with-kotlin
+
+For the implementation of a Navigation Drawer, I used the following guide:
+
+https://www.androidhire.com/navigation-drawer-in-kotlin-android/
+
+For the plant in the logo of the app and also in the default profile / ad picture I used the following Vector:
+
+https://www.freepik.com/free-vector/plant-emoji_34294721.htm
+
 
 ## Author
 [<img alt="author" width="40px" src="images/Author_pic.jpg" />](https://github.com/boini12)

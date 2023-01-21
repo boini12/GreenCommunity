@@ -3,7 +3,6 @@ package org.wit.greencommunity.activities
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
@@ -12,8 +11,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CompoundButton
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,27 +18,25 @@ import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.awaitAll
 import org.wit.greencommunity.R
 import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityAdBinding
 import org.wit.greencommunity.databinding.ActivityAdViewBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
-import org.wit.greencommunity.models.LocationModel
 import timber.log.Timber.i
-import java.net.URI
 
 /**
  *  This is the AdActivity of the GreenCommunity App
- *  this activity is used to add a new activity to the app and also add it to a users account
- *  [writeNewAd] pushes the new ad with its relevant information to the realtime database from firbase
+ *  this activity is used to add a new activity to the system. In addition to that, this activity is also used to display an ad or edit it
+ *  [writeNewAd] pushes the new ad with its relevant information to the realtime database from Firebase
+ *  [updateAd] uses the saved key from the ad to overwrite the old ad with the updated data
+ *  [deleteAd] removes the ad from the realtime database from Firebase
+ *  [getLastLocation] uses the Google Location API to get the current Location of the used device
  */
 
 class AdActivity : AppCompatActivity() {
@@ -64,7 +59,6 @@ class AdActivity : AppCompatActivity() {
         binding = ActivityAdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -162,6 +156,12 @@ class AdActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * To as errors to the EditTexts, I used the following stackoverflow post
+     * Link: https://stackoverflow.com/questions/44963165/how-to-set-text-focus-error-on-edittext-in-android-with-kotlin
+     * Last accessed: 21.01.2023
+     */
 
     private fun validateTitle() : Boolean {
         if(binding.adTitle.text.isEmpty()){
@@ -270,6 +270,11 @@ class AdActivity : AppCompatActivity() {
         return super.onPrepareOptionsMenu(menu)
     }
 
+    /**
+     * For this method I used the official Firebase documentation -> section delete data
+     * Link: https://firebase.google.com/docs/database/android/read-and-write
+     * Last accessed: 21.01.2023
+     */
 
     private fun deleteAd() {
         key = ad.id.toString()
@@ -333,7 +338,7 @@ class AdActivity : AppCompatActivity() {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     var location: Location? = task.result
                     if(location == null){
-                        Toast.makeText(this, "sth. went wrong", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Location could not be received", Toast.LENGTH_LONG).show()
                     }else{
                         ad.longitude = location.longitude
                         ad.latitude = location.latitude

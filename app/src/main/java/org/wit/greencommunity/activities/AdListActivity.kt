@@ -1,6 +1,5 @@
 package org.wit.greencommunity.activities
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,7 +11,6 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
@@ -29,8 +27,11 @@ import org.wit.greencommunity.adapter.AdListener
 import org.wit.greencommunity.databinding.ActivityAdListBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.AdModel
-import timber.log.Timber
 import timber.log.Timber.i
+
+/**
+ * In the AdListActivity the ads from the database will be displayed. But they are only displayed if they are in a certain range to the current Location of the used device
+ */
 
 class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigationItemSelectedListener{
     
@@ -62,13 +63,17 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
         auth = FirebaseAuth.getInstance()
 
+        /**
+         * Got the code from line 71 from the following guide:
+         * Link: https://www.youtube.com/watch?v=tbj5VH-KzFM&t=1s
+         * Last accessed: 21.01.2023
+         */
         binding.adListActivity.recyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
 
-        adList = arrayListOf<AdModel>()
-        //realtimeFirebaseData()
+        adList = arrayListOf()
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, binding.appToolbar.toolbar, 0, 0
@@ -95,20 +100,16 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
     private fun realtimeFirebaseData(){
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
-        i("Begin: " + this.location)
+
         database?.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 adList.clear()
-
                 if (snapshot.exists()) {
 
-                    i("Location: " + this@AdListActivity.location)
                     for (list in snapshot.children) {
                         val radiusInMeters = 5000
                         var distance= FloatArray(3)
-
 
                         val data = list.getValue(AdModel::class.java)
 
@@ -117,18 +118,11 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                             if(distance[0] <= radiusInMeters){
                                 adList.add(data)
                             }
-
                         }
-
                     }
-
                     binding.adListActivity.recyclerView.adapter = AdAdapter(adList, this@AdListActivity)
-
                 }
-
-
             }
-
 
             override fun onCancelled(error: DatabaseError) {
                 i("Data couldn't be received")
@@ -138,7 +132,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_adlist, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -146,38 +140,19 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, AdActivity::class.java)
-                getResult.launch(launcherIntent)
+                startActivity(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
 
-    private val getResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                (binding.adListActivity.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.ads.findAll().size)
-            }
-        }
-
     override fun onAdClick(ad: AdModel) {
 
         val launcherIntent = Intent(this, AdActivity::class.java)
         launcherIntent.putExtra("ad_view", ad)
-        getClickResult.launch(launcherIntent)
+        startActivity(launcherIntent)
 
-    }
-
-    private val getClickResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-        if(it.resultCode == Activity.RESULT_OK){
-            (binding.adListActivity.recyclerView.adapter)?.
-            notifyItemRangeChanged(0, app.ads.findAll().size)
-        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
