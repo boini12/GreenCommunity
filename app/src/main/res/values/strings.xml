@@ -14,6 +14,7 @@
 
     <!-- AdListActivity -->
     <string name="menu_addAd">Add</string>
+    <string name="adList_title">Ads in your area</string>
 
     <!-- SignUpActivity -->
     <string name="signUp_email">E-mail</string>
@@ -21,29 +22,34 @@
     <string name="signUp_password">Passwort</string>
     <string name="button_signUp">Sign-Up</string>
     <string name="text_SignUp">Sign-Up</string>
+    <string name="button_addImage">Add Image</string>
+    <string name="password_again">Enter Password Again</string>
+
     <!-- LoginActivity -->
     <string name="button_login">Login</string>
+    <string name="login_email">E-Mail</string>
+    <string name="login_password">Password</string>
 
+    <!-- LoginOrSignUpActivity -->
     <string name="text_NotLoggedIn">You are not logged in yet</string>
     <string name="text_ChooseOption">Login or Sign-up</string>
     <string name="text_login">Login</string>
-    <string name="login_email">E-Mail</string>
-    <string name="login_password">Password</string>
+
+    <!-- Menu -->
     <string name="menu_delete">Delete</string>
     <string name="menu_logout">Logout</string>
-    <string name="button_addImage">Add Image</string>
-    <string name="select_profile_picture">Select profile image</string>
-    <string name="change_profile_picture">Change profile picture</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_home">Home</string>
+
+    <!-- ProfileActiivty -->
+    <string name="select_profile_picture">Select profile image</string>
+    <string name="change_profile_picture">Change profile picture</string>
     <string name="text_profile">Profile</string>
     <string name="button_changeProfile">Save Changes</string>
     <string name="button_changeImg">Change Image</string>
     <string name="button_changePassword">Change Password</string>
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
-    <string name="password_again">Enter Password Again</string>
-    <string name="adList_title">Ads in your area</string>
+
+    <!-- UserAdsActivity -->
     <string name="title_userAds">Your ads</string>
 
 

@@ -63,6 +63,5 @@
                 tools:srcCompat="@tools:sample/avatars" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

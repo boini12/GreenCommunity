@@ -1,12 +1,10 @@
 package org.wit.greencommunity.activities
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -48,7 +46,7 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
 
-        userAdList = arrayListOf<AdModel>()
+        userAdList = arrayListOf()
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, binding.appToolbar.toolbar, 0, 0
@@ -57,15 +55,11 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
         toggle.syncState()
         navView.setNavigationItemSelectedListener(this)
 
-
     }
-
 
     override fun onStart() {
         super.onStart()
-
         realtimeFirebaseData()
-
     }
 
     /**
@@ -80,7 +74,6 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
 
     private fun realtimeFirebaseData(){
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
-
         database?.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -89,25 +82,17 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
 
                 if (snapshot.exists()) {
 
-
                     for (list in snapshot.children) {
-
                         val data = list.getValue(AdModel::class.java)
                         if (data != null && auth.currentUser != null) {
                             if(data.userID == auth.currentUser!!.uid){
                                 userAdList.add(data!!)
                             }
                         }
-
-
                     }
                     binding.adListActivity.recyclerView.adapter = AdAdapter(userAdList, this@UserAdsActivity)
-
                 }
-
-
             }
-
 
             override fun onCancelled(error: DatabaseError) {
                 Timber.i("Data couldn't be received")
@@ -162,15 +147,7 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
     override fun onAdClick(ad: AdModel) {
         val launcherIntent = Intent(this, AdActivity::class.java)
         launcherIntent.putExtra("ad_edit", ad)
-        getClickResult.launch(launcherIntent)
+        startActivity(launcherIntent)
     }
 
-    private val getClickResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-        if(it.resultCode == Activity.RESULT_OK){
-            (binding.adListActivity.recyclerView.adapter)?.
-            notifyItemRangeChanged(0, app.ads.findAll().size)
-        }
-    }
 }

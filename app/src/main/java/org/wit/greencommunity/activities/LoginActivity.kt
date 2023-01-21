@@ -13,10 +13,9 @@ import org.wit.greencommunity.main.MainApp
 import timber.log.Timber
 
 /**
- * The Login activity of the GreenCommunity application
  * Here the user can enter an email and a password to login
  * the credentials will be compared to the firebase database
- * if correctly entered then the user will be logged in and redirected to the HomeActivity otherwise an error message via Toast will be displayed
+ * if correctly entered then the user will be logged in and redirected to the HomeActivity otherwise an error message via a TextView will be displayed
  */
 
 class LoginActivity : AppCompatActivity() {
@@ -38,7 +37,6 @@ class LoginActivity : AppCompatActivity() {
         app = application as MainApp
 
         Timber.i("SignUpActivity has started")
-
 
         binding.btnSignUp.setOnClickListener(){
 
@@ -82,6 +80,5 @@ class LoginActivity : AppCompatActivity() {
         }
         return true
     }
-
 
 }

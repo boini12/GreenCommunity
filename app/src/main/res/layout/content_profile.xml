@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProfileActivity">
 
-
     <LinearLayout
         android:layout_width="353dp"
         android:layout_height="460dp"
@@ -13,8 +12,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_change"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/profileImg"
