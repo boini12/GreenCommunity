@@ -7,7 +7,7 @@
         <item name="android:paddingTop">@dimen/padding</item>
         <item name="android:paddingBottom">@dimen/padding</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/font_button</item>
+        <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:stateListAnimator">@null</item>
 
     </style>
