@@ -1,9 +1,11 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfileActivity">
+    tools:context=".activities.ProfileActivity"
+    >
 
     <LinearLayout
         android:layout_width="353dp"
@@ -12,13 +14,15 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_change"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
         <ImageView
             android:id="@+id/profileImg"
             android:layout_width="match_parent"
             android:layout_height="106dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@mipmap/ic_launcher"
+            />
 
         <EditText
             android:id="@+id/username"
@@ -26,7 +30,8 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:hint="@string/signUp_username"
-            android:inputType="text" />
+            android:inputType="text"
+            />
 
         <TextView
             android:id="@+id/email"
@@ -34,7 +39,8 @@
             android:layout_height="60dp"
             android:layout_margin="15dp"
             android:hint="@string/signUp_email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            />
 
 
         <Button
@@ -47,7 +53,8 @@
             android:paddingBottom="8dp"
             android:text="@string/button_changeImg"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            />
 
 
     </LinearLayout>
@@ -60,6 +67,7 @@
         android:text="@string/button_changeProfile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

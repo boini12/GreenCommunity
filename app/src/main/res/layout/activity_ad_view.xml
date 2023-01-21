@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AdActivity">
+    tools:context=".activities.AdActivity"
+    >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -20,13 +23,16 @@
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
             app:elevation="0dip"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:titleTextColor="@color/colorPrimary" />
+                app:titleTextColor="@color/colorPrimary"
+                />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -34,19 +40,22 @@
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout"
             android:layout_marginTop="0dp"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <ImageView
                     android:id="@+id/adViewImg"
                     android:layout_width="match_parent"
                     android:layout_height="216dp"
                     android:layout_marginTop="10dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@tools:sample/avatars"
+                    />
 
                 <TextView
                     android:id="@+id/adTitle"
@@ -60,7 +69,8 @@
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    />
 
                 <TextView
                     android:id="@+id/adDescription"
@@ -74,18 +84,21 @@
                     android:maxLines="3"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    />
 
                 <TableRow
                     android:layout_width="401dp"
-                    android:layout_height="96dp">
+                    android:layout_height="96dp"
+                    >
 
                     <CheckBox
                         android:id="@+id/adFree"
                         android:layout_width="150dp"
                         android:layout_height="77dp"
                         android:clickable="false"
-                        android:text="Ad is Free" />
+                        android:text="Ad is Free"
+                        />
 
                     <TextView
                         android:id="@+id/adPrice"
@@ -100,7 +113,8 @@
                         android:maxLines="3"
                         android:padding="8dp"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        />
 
                 </TableRow>
 
