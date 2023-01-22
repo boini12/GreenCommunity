@@ -121,19 +121,33 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
          * Last accessed: 21.01.2023
          */
 
+
         binding.profileActivity.btnChange.setOnClickListener{
 
-            val profileUpdates = userProfileChangeRequest {
-                photoUri = img
-                displayName = binding.profileActivity.username.text.toString()
+            if(validateUsername()){
+                val profileUpdates = userProfileChangeRequest {
+                    photoUri = img
+                    displayName = binding.profileActivity.username.text.toString()
+                }
+
+                user.updateProfile(profileUpdates)
+                    .addOnCompleteListener { task ->
+                        if(task.isSuccessful) {
+                            i("User has been updated")
+                        }
+                    }
             }
 
-            user.updateProfile(profileUpdates)
-                .addOnCompleteListener { task ->
-                    if(task.isSuccessful) {
-                        i("User has been updated")
-                    }
-                }
+        }
+
+    }
+
+    private fun validateUsername() : Boolean {
+        return if(binding.profileActivity.username.text.isEmpty()){
+            binding.profileActivity.username.error = "Please enter an username"
+            false
+        }else{
+            true
         }
 
     }
