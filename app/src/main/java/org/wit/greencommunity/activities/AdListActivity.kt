@@ -1,5 +1,6 @@
 package org.wit.greencommunity.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -251,20 +252,11 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
+    @SuppressLint("MissingPermission")
     private fun getLastLocation(){
         if(checkPermissions()){
             if(isLocationEnabled()){
 
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
                     if(location == null){
