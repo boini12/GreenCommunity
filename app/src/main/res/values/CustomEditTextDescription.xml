@@ -9,6 +9,7 @@
         <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:maxLines">5</item>
         <item name="android:maxLength">500</item>
+        <item name="android:textColorHint">@color/colorPrimaryLighter</item>
 
     </style>
 

@@ -5,39 +5,39 @@
 
         <item
             android:id="@+id/home"
-            android:title="Home"
+            android:title="@string/nav_home"
             />
 
         <item
             android:id="@+id/profile"
-            android:title="Profile"
+            android:title="@string/nav_profile"
             />
 
         <item
             android:id="@+id/ads"
-            android:title="Your Ads"
+            android:title="@string/nav_ads"
             />
 
     </group>
 
 
-    <item android:title="Account settings">
+    <item android:title="@string/nav_account_settings">
 
         <menu>
 
             <item
                 android:id="@+id/login"
-                android:title="Login"
+                android:title="@string/nav_login"
                 />
 
             <item
                 android:id="@+id/logout"
-                android:title="Logout"
+                android:title="@string/nav_logout"
                 />
 
             <item
                 android:id="@+id/signup"
-                android:title="Sign-Up"
+                android:title="@string/nav_sign_up"
                 />
 
         </menu>

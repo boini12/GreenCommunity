@@ -24,7 +24,6 @@ import org.wit.greencommunity.adapter.showImagePicker
 import org.wit.greencommunity.databinding.ActivityProfileBinding
 import org.wit.greencommunity.main.MainApp
 import org.wit.greencommunity.models.UserModel
-import timber.log.Timber
 import timber.log.Timber.i
 
 /**
@@ -52,7 +51,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         binding.appToolbar.toolbar.title = resources.getString(R.string.text_profile)
         setSupportActionBar(binding.appToolbar.toolbar)
 
-        Timber.i("ProfileActivity has started")
+        i("ProfileActivity has started")
 
         auth = FirebaseAuth.getInstance()
         user = auth.currentUser!!
@@ -144,7 +143,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun validateUsername() : Boolean {
         return if(binding.profileActivity.username.text.isEmpty()){
-            binding.profileActivity.username.error = "Please enter an username"
+            binding.profileActivity.username.error = resources.getString(R.string.enter_username)
             false
         }else{
             true

@@ -109,20 +109,19 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     private fun realtimeFirebaseData(){
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
 
-        database?.addValueEventListener(object : ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 adList.clear()
                 if (snapshot.exists()) {
 
                     for (list in snapshot.children) {
-                        var distance= FloatArray(3)
+                        val distance= FloatArray(3)
 
                         val data = list.getValue(AdModel::class.java)
                         if (data != null) {
                             Location.distanceBetween(this@AdListActivity.location.latitude, this@AdListActivity.location.longitude, data.latitude, data.longitude, distance)
                             if(distance[0] <= this@AdListActivity.distanceModel.chosenDistance * 1000){
-                                i("distance: " + this@AdListActivity.distanceModel.chosenDistance)
                                 adList.add(data)
                             }
                         }
@@ -240,13 +239,13 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == permissionID){
             if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                //Granted
+                i("Location has been granted")
             }
         }
     }
 
     private fun isLocationEnabled() : Boolean {
-        var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
+        val locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
                 LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
@@ -267,7 +266,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
                     return
                 }
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if(location == null){
                         Toast.makeText(this, "Location could not be received", Toast.LENGTH_LONG).show()
                     }else{

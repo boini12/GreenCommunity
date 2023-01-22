@@ -528,6 +528,10 @@ For the plant in the logo of the app and also in the default profile / ad pictur
 
 https://www.freepik.com/free-vector/plant-emoji_34294721.htm
 
+To check the contrast ratio of my design, I used the following website:
+
+https://dequeuniversity.com/rules/attest-android/1.0/color-contrast
+
 
 ## Author
 [<img alt="author" width="40px" src="images/Author_pic.jpg" />](https://github.com/boini12)

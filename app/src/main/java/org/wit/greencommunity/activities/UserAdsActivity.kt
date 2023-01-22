@@ -74,7 +74,7 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
 
     private fun realtimeFirebaseData(){
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
-        database?.addValueEventListener(object : ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -86,7 +86,7 @@ class UserAdsActivity : AppCompatActivity(), AdListener, NavigationView.OnNaviga
                         val data = list.getValue(AdModel::class.java)
                         if (data != null && auth.currentUser != null) {
                             if(data.userID == auth.currentUser!!.uid){
-                                userAdList.add(data!!)
+                                userAdList.add(data)
                             }
                         }
                     }

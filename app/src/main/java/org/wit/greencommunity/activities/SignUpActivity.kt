@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.squareup.picasso.Picasso
@@ -40,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
 
         i("SignUpActivity has started")
 
-            binding.btnSignUp.setOnClickListener(){
+            binding.btnSignUp.setOnClickListener {
 
                 /**
                  * For the signup method I used code from this website:
@@ -49,21 +48,19 @@ class SignUpActivity : AppCompatActivity() {
                  * This guide was also used for the [addUsername] and [addUserImgAndUsername] methods
                  */
                 if((validateEmail() || validatePassword() || validateUsername()) && validateEmail() && validatePassword() && validateUsername()){
-                    auth.createUserWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
-                        if(task.isSuccessful){
-                            if(img != null){
-                                addUserImgAndUsername(img)
-                            }else{
-                                addUsername()
-                            }
-                            Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show()
+                    auth.createUserWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this
+                    ) { task ->
+                        if (task.isSuccessful) {
+                            addUserImgAndUsername(img)
+                            Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG)
+                                .show()
                             val intent = Intent(this@SignUpActivity, HomeActivity::class.java)
                             startActivity(intent)
                             finish()
-                        }else {
+                        } else {
                             emailAlreadyUsed()
                         }
-                    })
+                    }
                 }
         }
         binding.addImage.setOnClickListener {
@@ -77,7 +74,6 @@ class SignUpActivity : AppCompatActivity() {
         if(auth.currentUser != null){
             val profileUpdates = userProfileChangeRequest {
                 photoUri = image
-                i("photoURI: $photoUri")
                 displayName = binding.username.text.toString()
             }
 
@@ -107,7 +103,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateUsername() : Boolean {
         return if(binding.username.text.isEmpty()){
-            binding.username.error = "Please enter an username"
+            binding.username.error = resources.getString(R.string.enter_username)
             false
         }else{
             true
@@ -117,7 +113,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateEmail() : Boolean {
         if(binding.email.text.isEmpty()){
-            binding.email.error = "Please enter an email"
+            binding.email.error = resources.getString(R.string.enter_email)
             return false
         }
         return true
@@ -125,20 +121,20 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validatePassword() : Boolean {
         if(binding.password.text.isEmpty()){
-            binding.password.error = "Please enter a password"
+            binding.password.error = resources.getString(R.string.enter_password)
             return false
         }else if(binding.password.text.length <= 6){
-            binding.password.error = "Enter password with length > 6"
+            binding.password.error = resources.getString(R.string.enter_password_length)
             return false
         }else if((binding.password.text.toString() != binding.passwordAgain.text.toString()) && binding.password.text.isNotEmpty()){
-            binding.passwordAgain.error = "The passwords don't match"
+            binding.passwordAgain.error = resources.getString(R.string.enter_password_no_match)
             return false
         }
         return true
     }
 
     private fun emailAlreadyUsed() {
-        binding.email.error = "Email already registered"
+        binding.email.error = resources.getString(R.string.email_already_registered)
     }
 
     private fun registerImagePickerCallback(){
