@@ -1,66 +1,64 @@
 <h1 align="center">Welcome to the GreenCommunity 🌱</h1>
 GreenCommunity is an app that is developed using Kotlin and Android Studio. It is an assignment for the KAPK module at the OTH Regensburg.
 
-The purpose of this app is, to create small communities that can share their homegrown produce (e.g that has been grown in a garden) with their neighborhood.
+The purpose of this app is, to give neighborhoods the ability to share their homegrown produce, that for exmaple has been grown in somebodys garden.
 
-Users can sign-up for the app by using an email and a passwort (basic input). The Authentification process is done by using Firebase Authentification. This means all the user accounts
-will be saved in a Firebase Authentification database. 
+Users can sign-up for the app by using an email and a passwort (basic input). The Authentification process is done by using Firebase Authentification. This means all the user accounts will be saved in a Firebase Authentification database. 
 
 Users also have the chance to add additional information to their account. This includes adding a username and a profile picture. This data is also saved in the same database as the other creditentials for the account.
 
 After a successful sign-up the user will be automatically signed-in and can start using the application.
 
-One of the Features includes creating ads and posting them. An ad can include a photo, a title, a description and a price (or is FREE). This data is stored on a Realtime Database from Firebase. Each post also saves the User UID (= the User ID from the Authentification Database) from the currently signed-in user, in order to be able to know which ad was created by whom. In addition to that, the location from the device will also be saved. This is important to later only display the ads in a 5km range.
+One of the Features includes creating ads and posting them. An ad can include a photo, a title, a description and a price (or is FREE). This data is stored on a Realtime Database from Firebase. Each post also saves the User UID (= the User ID from the Authentification Database) from the currently signed-in user, in order to be able to know which ad was created by whom. In addition to that, the location from the device will also be saved. This is important to, later only display the ads in a e.g. a 5km range.
 
 To get the location from the device, the Google API is used. This location gets automatically saved to a new ad when it is created. When the app is used for the first time, the user will get asked for permission to give the location services to the app. If the location services have not been turned on in the device, then the user will be redirected to the location settings.
 
 ## Key topics
 The following topics will be covered in the following part:
-* Installation
 
-* How to use the app
-  * Sign up
-  * Login
-  * Exploring ads
-  * Posting ads
-  * Edit ads
-
-* UI
-    * Brief overview of the Activities with their corresponding layout
-        * HomeActivity
-        * LoginOrSignUpActivity
-        * LoginActivity
-        * SignUpActivity
-        * AdListActivity  
-        * AdActivity
-          * No Parcel
-          * ad_view Parcel
-          * ad_edit Parcel
-        * UserAdsActivity
-        * ProfileActivity
-    * Navigating between Activites
-
-* Firebase
-    * Realtime Database Structure
-    * Code
-      * Authentification
-      * Realtime DB
-    
-* Messenger
-  
-* Tests
-
-* References
+- [Key topics](#key-topics)
+- [Installation](#installation)
+- [How to use the app](#how-to-use-the-app)
+  - [Signing up](#signing-up)
+  - [Login](#login)
+  - [Exploring ads](#exploring-ads)
+  - [Posting ads](#posting-ads)
+  - [Edit ads](#edit-ads)
+- [UI](#ui)
+  - [HomeActivity](#homeactivity)
+  - [LoginOrSignUpActivity](#loginorsignupactivity)
+  - [LoginActivity](#loginactivity)
+  - [SignUpActivity](#signupactivity)
+  - [AdListActivity](#adlistactivity)
+  - [AdActivity](#adactivity)
+    - [No Parcel](#no-parcel)
+    - [ad\_view Parcel](#ad_view-parcel)
+    - [ad\_edit Parcel](#ad_edit-parcel)
+  - [UserAdsActivity](#useradsactivity)
+  - [ProfileActivity](#profileactivity)
+  - [Navigating between Activites](#navigating-between-activites)
+- [Firebase](#firebase)
+  - [Realtime Database structure](#realtime-database-structure)
+  - [Code](#code)
+    - [Authentification](#authentification)
+    - [Realtime DB](#realtime-db)
+- [Location](#location)
+- [Messenger](#messenger)
+- [Tests](#tests)
+- [References](#references)
+- [Author](#author)
 
 ## Installation
-For the app a minimum SDK of 30 is set. The target SDK is set to 32. This means Android phones running Android 29 and lower won't be able to open this app. 
+For the app a minimum SDK of 30 is set. The target SDK is set to 33. This means Android phones running Android 29 and lower won't be able to open this app. 
 
 For the testing purposes of the application an Emulator in Android Studio was used. This was a Pixel 4 running Android 31.
 
-During the course of developing this app other Emulators running Android 30 and Android 32 were also tested, both were Pixel devices again.
+During the course of developing this app other Emulators running Android 30 and Android 33 were also tested, both were Pixel devices.
 
 ## How to use the app
-After starting the application, the user will be promted with the HomeActivity. The user can press the button in the middle of the screen. If no user is logged in, then this Activity will redirect the user to another Activity where they can decide wheather they want to login (Account already exits) or want to sign-up for this app.
+After starting the application, the user will be promted with the HomeActivity. The user can press the button in the middle of the screen. If no user is logged in, then this Activity will redirect the user to another Activity where they can decide wheather they want to login (Account already exits) or want to sign-up for this app. 
+
+In Addition to that, users can use the NavigationDrawer on the top left to navigate the app as well.
 
 ### Signing up
 The sign-up process involves entering data, that will be stored in a Firebase Authentification database. 
@@ -71,18 +69,20 @@ The sign-up process involves entering data, that will be stored in a Firebase Au
 - Password*
 - Profile picture (-> if none uploaded, then default picture will be used)
 
-The ones marked with * are necessary to successfully sign up.
+The ones marked with * are necessary to successfully sign up. If the user doesn't provide the necessary information, then Error Messages will appear on the corresponding fields.
 
 ### Login
-If the user already has an account, the he can simply login using the E-Mail and passord.
+If the user already has an account, then he can simply login using the E-Mail and password.
 
-Either way the user will get redirected to the HomeActivity again after a successful login or sign-up.
+Either way, the user will get redirected to the HomeActivity again after a successful login or sign-up.
 
 ### Exploring ads
-One of the main features that the user can use is to look for ads in their area. The user just has to press the "Explore ads in your area" on the HomeActivity to start looking for ads that are in a 5km radius to their current location.
+One of the main features that the user can use is to look for ads in their area. The user just has to press the "Explore ads in your area" on the HomeActivity to start looking for ads that are in a 5km/10km radius to their current location.
+
+The distance can be chosen through a NumberPicker, that is located above the button.
 
 ### Posting ads
-Another major feature of this ad, is posting ads. Logged-in users can create new ads, by pressing the plus icon on the top-right in the AdListActivity. 
+Another major feature of this app, is posting ads. Logged-in users can create new ads, by pressing the plus icon on the top-right in the AdListActivity. 
 
 To create a new ad the user has to provide a bit of information.
 
@@ -93,7 +93,11 @@ To create a new ad the user has to provide a bit of information.
 - Price*
 - Free (CheckBox)*
 
-The ones marked with * are necessary to successfully post an ad. Keep in mind, that the price and free checkbox don't have to be both clicked or supplied. Only one of them is necessary. For example, if the free checkbox is checked, the price will be automatically set to 0.0€. And if a price is entered, the free checkbox won't be clickable anymore.
+The ones marked with * are necessary to successfully post an ad.
+
+If the necessary 
+
+Keep in mind, that the price and free checkbox don't have to be both clicked or supplied. Only one of them is necessary. For example, if the free checkbox is checked, the price will be automatically set to 0.0€.
 
 ### Edit ads
 Users can edit their already posted ads. First they need to navigate to in the Navigation Drawer to the "Your ads" option, to see a list of their ads. By clicking on one of these ads, another activity is started where changes can be made and saved.
@@ -109,9 +113,6 @@ All the data can be changed.
 
 Ads can also be deleted here, by clicking the delete button on the top-right of this activity.
 
-### Message another user
-When a user has clicked on a ad in their area, they have the option to message the owner of this ad.
-
 ## UI
 In this section, a brief overview of all the activties can be found with a major focus of their design.
 
@@ -123,9 +124,10 @@ This is the current design of the HomeActivity:
      style="float: left; margin-right: 10px;" />
 
 
-The Homeactivity consist of one major functionality. This is the "Explore ads in your area" in the middle of the screen. This button redirects the user to the AdListActivity, if a user is logged-in, or to the LoginOrSignUpActivity, if no user is logged-in yet.
+The Homeactivity consist of two major functionality. First of all, the user can choose a distance. Either 5k or 10km. This distance is important for the ads that will be displayed. All of them will have to be in a < distance range, to the current Location of the user.
+In addition to that, the "Explore ads in your area" button in the middle of the screen redirects the user to the AdListActivity, if a user is logged-in, or to the LoginOrSignUpActivity, if no user is logged-in yet.
 
-In the HomeActivity the user can also use the Navigation Drawer on the top-left. The Navigation Drawer will be further explained in a another chapter.
+In the HomeActivity the user can also use the Navigation Drawer on the top-left. The Navigation Drawer will be further explained here: [Navigation Drawer](#navigating-between-activites).
 
 ### LoginOrSignUpActivity
 
@@ -137,7 +139,7 @@ This is the current desing of the LoginOrSignUpActivity:
 
 In this the activity, the user is notified of not being signed-in and then gets presented with two buttons. One to sign-up and one to login. This depends on what the user needs. For example, if an user already has an account, then the login button should be used. This will redirect the user to the LoginActivity. If the user doesn't have an account yet, then they should use the sign-up button. This will redirect them to the SignUpActivity.
 
-Bot of those activities will be further explained in the following.
+Both of those activities will be further explained in the following.
 
 ### LoginActivity
 
@@ -149,7 +151,9 @@ This is the current design of the LoginActivity:
 
 In the LoginActivity only two EditText components are displayed. One for the E-Mail and one for the password. If the creditentials match with the Firebase Authentification Databse the user will be logged-in, a Toast message will be shown to display the success and the user gets redirected to the HomeActivity.
 
-If the users credidentials don't match the user will **not** be logged in and a Toast message will display this error. The user will not be redirected. Therefore, they can try to login again, using the same activity.
+If the users credidentials don't match the user will **not** be logged in and an ErrorText will be displayed at the top. The user will not be redirected. Therefore, they can try to login again, using the same activity.
+
+If the fields are not filled out, then an error message will be shown on the corresponding EditText object.
 
 ### SignUpActivity
 
@@ -159,9 +163,9 @@ This is the current design of the SignUpActivity:
     alt="SignUpActivity"
      style="float: left; margin-right: 10px;" />
 
-In the SignUpActivity are various components displayed. First there are three EditTexts, which can be used by the user to input their data. These three include the username, the e-mail and the password.
+In the SignUpActivity are various components displayed. First there are four EditTexts, which can be used by the user to input their data. These four include the username, the e-mail and twice the password.
 
-In addition to that, the user can add an image to their profile. This can be done by pressing the add image button. When this button is pressed the user will be redirected to their photos and can selected an image that they would like to upload. 
+In addition to that, the user can add an image to their profile. This can be done by pressing the add image button. When this button is pressed the user will be redirected to their photos and can select an image that they would like to upload to their account. 
 
 If they choose to not upload an image, then a default image, which can also be seen on the screenshot, will be used instead.
 
@@ -169,7 +173,7 @@ After entering the needed information, the user can press the sign-up button at 
 
 After the successful sign-up the user gets redirected to the HomeActivity and is logged-in with their just created account.
 
-If the sign-up was not successful, information in form of Toast messages are displayed. For example, a Error message will be displayed, if the user doesn't enter a title.
+If the user doesn't fill out the necessary fields, then error messages will be displayed on the corresponding EditText objects. Furthermore, the password checks wheather the password has a length > 6 and if the two passwords match.
 
 ### AdListActivity
 
@@ -179,7 +183,7 @@ This is the current design of the AdListActivity:
     alt="AdListActivity"
      style="float: left; margin-right: 10px;" />
 
-The AdListActivity displays all the ads that are in a 5km radius of the current Location of the device. The RecyclerView shows the ads in a CardView. Each ad is displayed with an image (if one was uploaded), the title of the ad (in bold) and the price, if the ad is not free. If the ad was has the Checkbox isFree checked, then the Card will have a FREE text.
+The AdListActivity displays all the ads that are in a 5km/10km radius of the current Location of the device. The RecyclerView shows the ads in a CardView. Each ad is displayed with an image, the title of the ad (in bold) and the price, if the ad is not free. If the ad has the Checkbox isFree checked, then the Card will show "FREE".
 
 From here the user can select any of the ads that are displayed to open the AdActivity (with the parcel ad_view). This activity will be in the next chapter. 
 
@@ -216,6 +220,8 @@ When the Checkbox isFree is checked, the price will automatically be set to 0.0 
 
 If the CheckBox is not checked, but the user still enters a price of 0, then the Checkbox will be automatically checked, when the ad is posted.
 
+If the necessary information is not filled out, then error Messages will be displayed on the corresponding fields.
+
 #### ad_view Parcel
 
 This is the current design of the AdActivity, if the ad_view Parcel is being send:
@@ -238,7 +244,7 @@ This is the current design of the AdActivity, if the ad_view Parcel is being sen
 
 The ad_edit Parcel is being sent from the UserAdsActivity (this activity will be explained in the following chapter), when an ad is clicked on the RecyclerView. This parcel makes sure, that the user, that has created this ad, is able to make changes.
 
-In addition that, the user can also decide to delete this ad. This can be achieved by clicking in the delete button on the top-right. This then removes the saved data under this key from the Firebase Realtime Database.
+In addition to that, the user can also decide to delete this ad. This can be achieved by clicking on the delete button on the top-right. This then removes the saved data under this key from the Firebase Realtime Database.
 
 ### UserAdsActivity
 
@@ -267,6 +273,8 @@ The ProfileActivity displays the currently logged-in user's information that has
 - Username
 
 So far only those two aspects can be changed. The changes are then adjusted in the Firebase Authentification Database as well.
+
+If the username field is not filled out, an error message will be shown on the corresponding EditText object.
 
 In the future it would make sense to add the feature to change the creditentials (email, password) as well.
 
@@ -297,11 +305,11 @@ The NavDrawer can be opened through swiping from left to right on the screen or 
   - Logout -> HomeActivity (user gets signed-out)
   - Sign-Up -> SignUpActivity
 
-If the user is for example alreay on the HomeActivity but selects the Home item, nothing will happen. This is done for each activity in the same manner.
+If the user is for example already on the HomeActivity but selects the Home item, nothing will happen. This is done for each activity in the same manner.
 
 ## Firebase
 
-For the storage of data in every aspect Firebase was used. As mentioned throught this file, currently two databases are used. The Authentification DB and the Realtime DB.
+For the storage of data Firebase was used. As mentioned throughout this file, currently two databases are used. The Authentification DB and the Realtime DB.
 
 The Authentification DB stores all the active accounts. They can also be manually deleted again from the system, but only by using the Firebase console.
 
@@ -314,7 +322,6 @@ This shows an example of how the DB is strucutred. The key for each post is a ra
 <img src="images/RealtimeDB_structure.png"
     alt="NavigationDrawer"
      style="float: left; margin-right: 10px;" />
-
 
 
 ### Code
@@ -364,7 +371,7 @@ This is done by the two methods:
 - addUserImgAndUsername(image : URI)
 - addUsername
 
-both of these methods call the updateProfile method that adjust the user account again.
+both of these methods call the updateProfile method that adjusts the user account.
 
 Example: addUsername()
 
@@ -437,7 +444,7 @@ private fun writeNewAd(){
     }
 ```
 
-First of all this methos gets a push key from Firebase. This is important since the ad needs to store this information as well. Therefore, the ad.id. is set to the just generated key.
+First of all this methos gets a push key from Firebase. This is important since the ad needs to store this information. Therefore, the ad.id. is set to the just generated key.
 
 The whole ad then gets pushed to the Realtime DB under the key that has been created in the beginning.
 
@@ -468,20 +475,93 @@ private fun deleteAd() {
 ```
 To delete an ad, the push key is needed once again. Through this key, the selected ad can be found in the Realtime DB and then removed through the removeValue method.
 
+## Location
+
+To receive the current Location from the user, I used the Google API. In this section, I will explain a bit of the code, that I used for this feature.
+
+Following variable is needed:
+
+```kotlin
+private lateinit mFusedLocationClient : FusedLocationProviderClient
+```
+
+```kotlin
+mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+```
+
+```kotlin
+@SuppressLint("MissingPermission")
+    private fun getLastLocation(){
+        if(checkPermissions()){
+            if(isLocationEnabled()){
+
+                mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                    val location: Location? = task.result
+                    if(location == null){
+                        Toast.makeText(this, "Location could not be received", Toast.LENGTH_LONG).show()
+                    }else{
+                        this.location = location
+                    }
+                }
+            }else{
+                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+
+        }else{
+            requestPermissions()
+        }
+    }
+```
+
+This is the main method that is used in order to get the Location. The first thing it does, is check the Permissions. This is done with the following method.
+
+The @SuppressLint("MissingPermission") is added, because otherwise Android Studio wants to add a permission check before mFusedLocationClient can access the last location. But this permission check is done in the following method and therefore not needed twice.
+
+```kotlin
+private fun checkPermissions(): Boolean {
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+```
+
+This method checks, wheather both of these permissions have been granted or not.
+
+After this check, the getLastLocation method, will check if the Location services are enabled on the device. This is done in the following method.
+
+```kotlin
+private fun isLocationEnabled() : Boolean {
+        val locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
+                LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+```
+When both of these checks return true, the mFusedLocationClient will get the last Location from the device. After it has been successfully aquired, this location will be set to variable of the same name.
+
 ## Messenger
 
 As of right now, no messenger has been implemented. But it is planned to do so using Firebase once again.
 The following guide will be used for this:
+
 https://firebase.google.com/codelabs/firebase-android#0
+
+The current problem is, that another Realtime Database would be needed in order to implement this feature. But in the Spark plan (free) from Firebase, only one Realtime DB can be created. Therefore, I made the decision to not implement a messenger.
 
 ## Tests
 
 As of right now, no tests have been implemented. But is planned to do so using the following guide:
 https://developer.android.com/training/testing/fundamentals
 
+Tests should be implemented in the future, but are not part of this assignment.
+
 ## References
 
-All references of guides or stackOverflow posts can be found in the Code documentation of this project. But they will also be listed in this file.
+All references of guides or stackOverflow posts can be found in the Code documentation (KDoc) of this project. But some of them will also be listed in this file. Fore more information about the links, like when they were last accessed please refer to documentation.
 
 For the writeNewAd() method from the AdActivity the following guide was used:
 
@@ -531,6 +611,11 @@ https://www.freepik.com/free-vector/plant-emoji_34294721.htm
 To check the contrast ratio of my design, I used the following website:
 
 https://dequeuniversity.com/rules/attest-android/1.0/color-contrast
+
+To change the color of the Navigation Drawer Buger, I used the following StackOverflow post:
+
+https://stackoverflow.com/questions/31870132/how-to-change-color-of-hamburger-icon-in-material-design-navigation-drawer
+
 
 
 ## Author

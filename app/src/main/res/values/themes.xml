@@ -17,6 +17,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <!-- https://stackoverflow.com/questions/31870132/how-to-change-color-of-hamburger-icon-in-material-design-navigation-drawer -->
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
     </style>
 
     <style name="Theme.GreenCommunity.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

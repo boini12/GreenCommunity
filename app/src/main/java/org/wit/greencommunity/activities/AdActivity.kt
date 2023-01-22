@@ -165,7 +165,7 @@ class AdActivity : AppCompatActivity() {
     }
 
     /**
-     * To as errors to the EditTexts, I used the following stackoverflow post
+     * To add errors to the EditTexts, I used the following stackoverflow post
      * Link: https://stackoverflow.com/questions/44963165/how-to-set-text-focus-error-on-edittext-in-android-with-kotlin
      * Last accessed: 21.01.2023
      */
@@ -332,16 +332,6 @@ class AdActivity : AppCompatActivity() {
         if(checkPermissions()){
             if(isLocationEnabled()){
 
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
                     if(location == null){
