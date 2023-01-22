@@ -135,17 +135,19 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     .addOnCompleteListener { task ->
                         if(task.isSuccessful) {
                             i("User has been updated")
+                            binding.profileActivity.profileUpdateSuccess.visibility = View.VISIBLE
                         }
                     }
             }
+        }
+    }
 
-            user.updateProfile(profileUpdates)
-                .addOnCompleteListener { task ->
-                    if(task.isSuccessful) {
-                        i("User has been updated")
-                        binding.profileActivity.profileUpdateSuccess.visibility = View.VISIBLE
-                    }
-                }
+    private fun validateUsername() : Boolean {
+        return if(binding.profileActivity.username.text.isEmpty()){
+            binding.profileActivity.username.error = "Please enter an username"
+            false
+        }else{
+            true
         }
 
     }
