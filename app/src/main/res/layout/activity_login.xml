@@ -44,6 +44,7 @@
             android:layout_height="80dp"
             android:layout_margin="15dp"
             android:hint="@string/login_email"
+            android:autofillHints ="hint"
             android:inputType="textEmailAddress"
             style="@style/CustomEditText"
             />
@@ -54,6 +55,7 @@
             android:layout_height="80dp"
             android:layout_margin="15dp"
             android:hint="@string/login_password"
+            android:autofillHints ="hint"
             android:inputType="textPassword"
             style="@style/CustomEditText"
             />

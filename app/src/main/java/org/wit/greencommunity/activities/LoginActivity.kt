@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import org.wit.greencommunity.R
 import org.wit.greencommunity.databinding.ActivityLoginBinding
@@ -38,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
         Timber.i("SignUpActivity has started")
 
-        binding.btnLogin.setOnClickListener(){
+        binding.btnLogin.setOnClickListener {
 
             /**
              * For the login method I used code from this website:
@@ -48,17 +47,18 @@ class LoginActivity : AppCompatActivity() {
 
             if((validateEmail() || validatePassword()) && validatePassword() && validateEmail()){
 
-                auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this, OnCompleteListener { task ->
-                    if(task.isSuccessful){
+                auth.signInWithEmailAndPassword(binding.email.text.toString(), binding.password.text.toString()).addOnCompleteListener(this
+                ) { task ->
+                    if (task.isSuccessful) {
                         Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
-                    }else{
-                        binding.errorText.text = "Email or password incorrect"
+                    } else {
+                        binding.errorText.text = resources.getString(R.string.error_text)
                         binding.errorText.visibility = View.VISIBLE
                     }
-                })
+                }
             }
 
         }
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
          * Last opened: 29.11.2022
          */
 
-        binding.btnForgotPassword.setOnClickListener() {
+        binding.btnForgotPassword.setOnClickListener {
 
             if(validateEmail()){
                 auth.sendPasswordResetEmail(binding.email.text.toString()).addOnCompleteListener { task ->
@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateEmail() : Boolean {
         if(binding.email.text.isEmpty()){
-            binding.email.error = "Please enter an email"
+            binding.email.error = resources.getString(R.string.enter_email)
             return false
         }
         return true
@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validatePassword() : Boolean {
         if(binding.password.text.isEmpty()){
-            binding.password.error = "Please enter a password"
+            binding.password.error = resources.getString(R.string.enter_password)
             return false
         }
         return true

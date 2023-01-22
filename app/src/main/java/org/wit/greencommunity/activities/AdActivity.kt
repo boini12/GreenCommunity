@@ -51,7 +51,7 @@ class AdActivity : AppCompatActivity() {
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var img : Uri
-    var edit = false
+    private var edit = false
     private lateinit var key : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +59,7 @@ class AdActivity : AppCompatActivity() {
         binding = ActivityAdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.appToolbar.toolbar.title = resources.getString(R.string.ad_activity_title)
         setSupportActionBar(binding.appToolbar.toolbar)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -96,7 +97,7 @@ class AdActivity : AppCompatActivity() {
             viewBinding.adTitle.text = ad.title
             viewBinding.adDescription.text = ad.description
             viewBinding.adFree.isChecked = ad.isFree
-            viewBinding.adPrice.text = ad.price.toString()
+            viewBinding.adPrice.text = resources.getString(R.string.view_price).format(ad.price.toString())
             Picasso.get()
                 .load(ad.adImg?.toUri())
                 .placeholder(R.mipmap.ic_launcher)
@@ -106,12 +107,13 @@ class AdActivity : AppCompatActivity() {
         if(intent.hasExtra("ad_edit")) {
             edit = true
             ad = intent.extras?.getParcelable("ad_edit")!!
+            binding.appToolbar.toolbar.title = resources.getString(R.string.ad_activity_edit_title)
             binding.adTitle.setText(ad.title)
-            binding.btnAddImg.text = "Change Image"
-            //binding.adDescription.setText(ad.description)
+            binding.btnAddImg.text = resources.getString(R.string.button_changeImg)
+            binding.adDescription.setText(ad.description)
             binding.adFree.isChecked = ad.isFree
             binding.adPrice.setText(ad.price.toString())
-            binding.btnAdd.text = "Save Ad"
+            binding.btnAdd.text = resources.getString(R.string.save_ad)
             Picasso.get()
                 .load(ad.adImg?.toUri())
                 .placeholder(R.mipmap.ic_launcher)
@@ -137,7 +139,7 @@ class AdActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener{
             if((validateTitle() || validatePrice()) && validatePrice() && validateTitle()){
                 ad.title = binding.adTitle.text.toString()
-               // ad.description = binding.adDescription.text.toString()
+                ad.description = binding.adDescription.text.toString()
                 ad.isFree = binding.adFree.isChecked
                 ad.price = binding.adPrice.text.toString().toDouble()
 
@@ -170,7 +172,7 @@ class AdActivity : AppCompatActivity() {
 
     private fun validateTitle() : Boolean {
         if(binding.adTitle.text.isEmpty()){
-            binding.adTitle.error = "Please enter a title"
+            binding.adTitle.error = resources.getString(R.string.enter_title)
             return false
         }
         return true
@@ -179,10 +181,10 @@ class AdActivity : AppCompatActivity() {
     private fun validatePrice() : Boolean {
         val regex = Regex("[^0-9 .]+")
         if(binding.adPrice.text.isEmpty() && !binding.adFree.isChecked){
-            binding.adPrice.error = "Enter a price or make ad free"
+            binding.adPrice.error = resources.getString(R.string.enter_price_or_free)
             return false
         }else if(binding.adPrice.text.contains(regex)) {
-            binding.adPrice.error = "Please enter a valid price"
+            binding.adPrice.error = resources.getString(R.string.enter_valid_price)
             return false
         }else if(binding.adFree.isChecked){
             // resets the error indicator
@@ -226,7 +228,7 @@ class AdActivity : AppCompatActivity() {
     private fun writeNewAd(){
         key = database.push().key ?: ""
         ad.id = key
-        var newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree, ad.adImg,
+        val newAd = AdModel(ad.id, ad.title, ad.description, ad.price, ad.longitude, ad.latitude, ad.isFree, ad.adImg,
                     auth.currentUser?.uid)
 
         database.child(key)
@@ -314,13 +316,13 @@ class AdActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == permissionID){
             if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                //Granted
+                i("Location has been granted")
             }
         }
     }
 
     private fun isLocationEnabled() : Boolean {
-        var locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
+        val locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as
                 LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
@@ -341,7 +343,7 @@ class AdActivity : AppCompatActivity() {
                     return
                 }
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if(location == null){
                         Toast.makeText(this, "Location could not be received", Toast.LENGTH_LONG).show()
                     }else{

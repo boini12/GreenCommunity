@@ -3,12 +3,16 @@
     <string name="app_name">GreenCommunity</string>
 
     <!-- AdActivity -->
+    <string name="ad_activity_edit_title">Edit Ad</string>
+    <string name="ad_activity_title">Create Ad</string>
     <string name="button_addAd">Add new Ad</string>
     <string name="hint_adTitle">Title</string>
     <string name="hint_adDescription">Description</string>
     <string name="hint_adPrice">Price</string>
     <string name="menu_cancelAd">Cancel</string>
     <string name="ad_is_free">Add is Free</string>
+    <string name="save_ad">Save Ad</string>
+    <string name="view_price">%s€</string>
 
     <!-- HomeActivity -->
     <string name="button_explore">Explore Ads in your Area</string>
@@ -32,6 +36,7 @@
     <string name="login_email">E-Mail</string>
     <string name="login_password">Password</string>
     <string name="resetPassword">Reset Password</string>
+    <string name="error_text">Email or Password incorrect</string>
 
     <!-- LoginOrSignUpActivity -->
     <string name="text_NotLoggedIn">You are not logged in yet</string>
@@ -56,6 +61,31 @@
     <!-- UserAdsActivity -->
     <string name="title_userAds">Your ads</string>
     <string name="title_placeholder">Title Placeholder</string>
+
+    <!-- ImageView Descriptions -->
+    <string name="description_ad">Image for of an ad</string>
+    <string name="description_profile">Users profile image</string>
+
+    <!-- NavDrawer -->
+    <string name="nav_home">Home</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_ads">Your Ads</string>
+    <string name="nav_account_settings">Account Settings</string>
+    <string name="nav_login">Login</string>
+    <string name="nav_logout">Logout</string>
+    <string name="nav_sign_up">Sign-Up</string>
+
+    <!-- Error Texts -->
+    <string name="enter_password">Please enter a password</string>
+    <string name="enter_email">Please enter an email</string>
+    <string name="enter_password_length">Enter a password with length > 6</string>
+    <string name="enter_password_no_match">The passwords don\'t match</string>
+    <string name="enter_username">Please enter a username</string>
+    <string name="enter_title">Please enter a title</string>
+    <string name="enter_price_or_free">Enter a price or make ad free</string>
+    <string name="enter_valid_price">Please enter a valid price</string>
+    <string name="email_already_registered">Email already registered</string>
+
 
 
 </resources>

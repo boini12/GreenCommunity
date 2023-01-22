@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomEditTextTitle">
+    <style name="CustomTextViewTitle">
 
-        <item name="android:inputType">text</item>
         <item name="android:padding">@dimen/padding</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/font_normal</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:maxLength">25</item>
-        <item name="android:enabled">true</item>
         <item name="android:textColorHint">@color/colorPrimaryLighter</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
 
     </style>
+
 
 </resources>

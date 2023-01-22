@@ -16,15 +16,17 @@ class FirebaseTestData {
     private lateinit var database : DatabaseReference
     private var ad = AdModel()
 
-    fun testAdModels(){
+    private fun testAdModels(){
 
         database = FirebaseDatabase.getInstance("https://greencommunity-219d2-default-rtdb.europe-west1.firebasedatabase.app/").getReference("posts")
         auth = FirebaseAuth.getInstance()
 
         for(i in 1..3){
-            var key = database.push().key ?: ""
+            val key = database.push().key ?: ""
             ad.id = key
-            var newAd = AdModel(ad.id, "TestTitle" + i, "TestDescription" + i, 5.0, 12.097528757902154,  49.00255973138827, false, ad.adImg,
+            val newAd = AdModel(ad.id,
+                "TestTitle$i",
+                "TestDescription$i", 5.0, 12.097528757902154,  49.00255973138827, false, ad.adImg,
                 auth.currentUser?.uid)
 
             database.child(key)

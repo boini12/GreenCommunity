@@ -4,8 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class DistanceModel(var chosenDistance: Int = 5) : Parcelable {
-    constructor(parcel: Parcel) : this(parcel.readInt()) {
-    }
+    constructor(parcel: Parcel) : this(parcel.readInt())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(chosenDistance)

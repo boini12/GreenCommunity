@@ -27,8 +27,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
     lateinit var app : MainApp
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navView: NavigationView
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
     private lateinit var distanceModel : DistanceModel
 
 
@@ -73,14 +73,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         distanceModel = DistanceModel()
 
-        binding.homeActivity.homeNumberPicker.setOnValueChangedListener() { _, _, newVal ->
+        binding.homeActivity.homeNumberPicker.setOnValueChangedListener { _, _, newVal ->
             this.distanceModel.chosenDistance = distanceOptions[newVal].toInt()
         }
 
 
         i("GreenCommunity Application has been started")
 
-        binding.homeActivity.btnExplore.setOnClickListener(){
+        binding.homeActivity.btnExplore.setOnClickListener {
 
             if(auth.currentUser != null){
                 val launcherIntent = Intent(this, AdListActivity::class.java)
