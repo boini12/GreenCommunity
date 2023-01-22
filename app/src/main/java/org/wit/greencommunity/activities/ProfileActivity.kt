@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -138,16 +139,13 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     }
             }
 
-        }
-
-    }
-
-    private fun validateUsername() : Boolean {
-        return if(binding.profileActivity.username.text.isEmpty()){
-            binding.profileActivity.username.error = "Please enter an username"
-            false
-        }else{
-            true
+            user.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if(task.isSuccessful) {
+                        i("User has been updated")
+                        binding.profileActivity.profileUpdateSuccess.visibility = View.VISIBLE
+                    }
+                }
         }
 
     }

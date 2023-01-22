@@ -59,7 +59,7 @@ class AdActivity : AppCompatActivity() {
         binding = ActivityAdBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbarAdd)
+        setSupportActionBar(binding.appToolbar.toolbar)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 

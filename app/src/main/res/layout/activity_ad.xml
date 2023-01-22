@@ -1,117 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AdActivity">
+    tools:context=".activities.AdActivity"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <include
+            android:id="@+id/appToolbar"
+            layout="@layout/app_bar_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:fitsSystemWindows="true"
-            app:elevation="0dip"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarAdd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:titleTextColor="@color/colorPrimary" />
-        </com.google.android.material.appbar.AppBarLayout>
+            />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/appBarLayout"
-            android:fillViewport="true">
+            android:layout_below="@id/appToolbar"
+            android:fillViewport="true"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+                android:orientation="vertical"
+                >
 
                 <ImageView
                     android:id="@+id/adImg"
                     android:layout_width="match_parent"
                     android:layout_height="161dp"
                     android:layout_marginTop="10dp"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    tools:srcCompat="@mipmap/ic_launcher"
+                    />
 
                 <Button
                     android:id="@+id/btnAddImg"
                     android:layout_width="match_parent"
                     android:layout_height="73dp"
                     android:layout_margin="16dp"
-                    android:background="@color/colorPrimary"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:stateListAnimator="@null"
                     android:text="@string/button_addImage"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    style="@style/CustomButton"
+                    />
 
                 <EditText
                     android:id="@+id/adTitle"
                     android:layout_width="match_parent"
                     android:layout_height="86dp"
                     android:layout_margin="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/hint_adTitle"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    style="@style/CustomEditTextTitle"
+                    />
 
                 <EditText
                     android:id="@+id/adDescription"
                     android:layout_width="397dp"
                     android:layout_height="77dp"
                     android:layout_margin="8dp"
-                    android:autofillHints="hint"
                     android:hint="@string/hint_adDescription"
-                    android:inputType="textMultiLine"
-                    android:maxLength="500"
-                    android:maxLines="3"
-                    android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    style="@style/CustomEditTextDescription"
+                    />
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="98dp">
+                    android:layout_height="98dp"
+                    >
 
                     <CheckBox
                         android:id="@+id/adFree"
                         android:layout_width="146dp"
                         android:layout_height="85dp"
-                        android:text="Ad is Free" />
+                        android:text="@string/ad_is_free"
+                        />
 
                     <EditText
                         android:id="@+id/adPrice"
                         android:layout_width="237dp"
                         android:layout_height="88dp"
                         android:layout_margin="8dp"
-                        android:autofillHints="hint"
-                        android:enabled="true"
                         android:hint="@string/hint_adPrice"
-                        android:inputType="text"
-                        android:maxLength="100"
-                        android:maxLines="3"
-                        android:padding="8dp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="14sp" />
+                        style="@style/CustomEditTextTitle"
+                        />
 
                 </TableRow>
 
@@ -120,13 +98,9 @@
                     android:layout_width="211dp"
                     android:layout_height="75dp"
                     android:layout_margin="16dp"
-                    android:background="@color/colorPrimary"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:stateListAnimator="@null"
                     android:text="@string/button_addAd"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    style="@style/CustomButton"
+                    />
 
             </LinearLayout>
         </ScrollView>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -10,47 +11,45 @@
     card_view:cardElevation="7dp"
     card_view:cardBackgroundColor="@color/white"
     android:elevation="24dp"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
-
+        android:padding="16dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <TextView
                 android:id="@+id/adPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Title Placeholder"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp"
+                android:text="@string/title_placeholder"
                 card_view:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="5dp" />
+                tools:layout_editor_absoluteX="5dp"
+                android:textStyle="normal"
+                style="@style/CardPrice"
+                />
 
             <TextView
                 android:id="@+id/adTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:gravity="center"
-                android:lines="1"
-                android:text="Title Placeholder"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="15sp"
-                android:textStyle="bold"
+                android:text="@string/title_placeholder"
                 card_view:layout_constraintBottom_toTopOf="@+id/adPrice"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintVertical_bias="1.0"
-                tools:layout_editor_absoluteX="10dp" />
+                tools:layout_editor_absoluteX="10dp"
+                style="@style/CardTitle"
+                />
 
             <ImageView
                 android:id="@+id/adCardImg"
@@ -60,8 +59,11 @@
                 card_view:layout_constraintBottom_toTopOf="@+id/adTitle"
                 card_view:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="10dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

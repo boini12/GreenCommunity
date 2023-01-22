@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomTextView">
+
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/font_normal</item>
+
+    </style>
+
+
+</resources>

@@ -1,9 +1,11 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginOrSignUpActivity">
+    tools:context=".activities.LoginOrSignUpActivity"
+    >
 
     <Button
         android:id="@+id/btn_login"
@@ -16,7 +18,9 @@
         app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        style="@style/CustomButton"
+        />
 
     <Button
         android:id="@+id/btn_signUp"
@@ -28,33 +32,37 @@
         app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745" />
+        app:layout_constraintVertical_bias="0.745"
+        style="@style/CustomButton"
+        />
 
     <TextView
         android:id="@+id/NotLoggedIn"
         android:layout_width="240dp"
         android:layout_height="55dp"
         android:text="@string/text_NotLoggedIn"
-        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516" />
+        app:layout_constraintVertical_bias="0.516"
+        style="@style/CustomText"
+        />
 
     <TextView
         android:id="@+id/chooseOption"
         android:layout_width="240dp"
         android:layout_height="55dp"
         android:text="@string/text_ChooseOption"
-        android:textSize="20dp"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintVertical_bias="0.86"
+        style="@style/CustomText"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

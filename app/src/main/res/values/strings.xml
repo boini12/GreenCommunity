@@ -8,6 +8,7 @@
     <string name="hint_adDescription">Description</string>
     <string name="hint_adPrice">Price</string>
     <string name="menu_cancelAd">Cancel</string>
+    <string name="ad_is_free">Add is Free</string>
 
     <!-- HomeActivity -->
     <string name="button_explore">Explore Ads in your Area</string>
@@ -20,7 +21,7 @@
     <!-- SignUpActivity -->
     <string name="signUp_email">E-mail</string>
     <string name="signUp_username">Username</string>
-    <string name="signUp_password">Passwort</string>
+    <string name="signUp_password">Password</string>
     <string name="button_signUp">Sign-Up</string>
     <string name="text_SignUp">Sign-Up</string>
     <string name="button_addImage">Add Image</string>
@@ -43,16 +44,18 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_home">Home</string>
 
-    <!-- ProfileActiivty -->
+    <!-- ProfileActivity -->
     <string name="select_profile_picture">Select profile image</string>
     <string name="change_profile_picture">Change profile picture</string>
     <string name="text_profile">Profile</string>
     <string name="button_changeProfile">Save Changes</string>
     <string name="button_changeImg">Change Image</string>
     <string name="button_changePassword">Change Password</string>
+    <string name="profile_update_successful">Profile has been updated</string>
 
     <!-- UserAdsActivity -->
     <string name="title_userAds">Your ads</string>
+    <string name="title_placeholder">Title Placeholder</string>
 
 
 </resources>

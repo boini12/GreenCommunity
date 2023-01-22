@@ -6,22 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".activities.HomeActivity">
+    tools:context=".activities.HomeActivity"
+    >
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    >
 
                     <TextView
                         android:id="@+id/homeText"
@@ -30,26 +34,23 @@
                         android:text="@string/text_choseRadius"
                         app:layout_constraintBottom_toTopOf="@+id/homeNumberPicker"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:textSize="25dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.763" />
+                        app:layout_constraintVertical_bias="0.763"
+                        style="@style/CustomHomeText"
+                        />
 
                     <Button
                         android:id="@+id/btnExplore"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/CustomButton"
+                        android:layout_width="355dp"
+                        android:layout_height="80dp"
                         android:layout_margin="16dp"
-                        android:background="@color/colorPrimary"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:stateListAnimator="@null"
                         android:text="@string/button_explore"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:layout_editor_absoluteX="2dp" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <NumberPicker
                         android:id="@+id/homeNumberPicker"
@@ -59,10 +60,14 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.791" />
+                        app:layout_constraintVertical_bias="0.791"
+                        />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
+
         </ScrollView>
+
     </FrameLayout>
 
