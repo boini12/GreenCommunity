@@ -43,7 +43,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
     private lateinit var adList : ArrayList<AdModel>
-    private val PERMISSION_ID = 42
+    private val permissionID = 42
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
     private lateinit var location: Location
     private lateinit var distanceModel: DistanceModel
@@ -229,7 +229,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
 
     private fun requestPermissions(){
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION),
-            PERMISSION_ID)
+            permissionID)
     }
 
     override fun onRequestPermissionsResult(
@@ -238,7 +238,7 @@ class AdListActivity : AppCompatActivity(), AdListener, NavigationView.OnNavigat
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == PERMISSION_ID){
+        if(requestCode == permissionID){
             if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
                 //Granted
             }
