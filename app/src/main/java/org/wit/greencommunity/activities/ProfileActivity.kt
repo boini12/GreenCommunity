@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -132,6 +133,7 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
                         i("User has been updated")
+                        binding.profileActivity.profileUpdateSuccess.visibility = View.VISIBLE
                     }
                 }
         }

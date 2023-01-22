@@ -8,39 +8,44 @@
     >
 
     <LinearLayout
-        android:layout_width="353dp"
-        android:layout_height="460dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="362dp"
+        android:layout_height="539dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_change"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/profileUpdateSuccess"
+            style="@style/CustomSuccessText"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginTop="72dp"
+            android:text="@string/profile_update_successful"
+            android:textColor="@color/colorPrimaryDark" />
 
         <ImageView
             android:id="@+id/profileImg"
             android:layout_width="match_parent"
             android:layout_height="106dp"
-            app:srcCompat="@mipmap/ic_launcher"
-            />
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <EditText
             android:id="@+id/username"
+            style="@style/CustomEditText"
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
-            android:hint="@string/signUp_username"
-            style="@style/CustomEditText"
-            />
+            android:hint="@string/signUp_username" />
 
         <TextView
             android:id="@+id/email"
+            style="@style/CustomTextView"
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
-            android:hint="@string/signUp_email"
-            style="@style/CustomTextView"
-            />
+            android:hint="@string/signUp_email" />
 
 
         <Button
@@ -53,8 +58,7 @@
             android:paddingBottom="8dp"
             android:text="@string/button_changeImg"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
 
     </LinearLayout>

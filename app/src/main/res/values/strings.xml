@@ -51,6 +51,7 @@
     <string name="button_changeProfile">Save Changes</string>
     <string name="button_changeImg">Change Image</string>
     <string name="button_changePassword">Change Password</string>
+    <string name="profile_update_successful">Profile has been updated</string>
 
     <!-- UserAdsActivity -->
     <string name="title_userAds">Your ads</string>
