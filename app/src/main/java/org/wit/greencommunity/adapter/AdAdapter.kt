@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.greencommunity.R
 import org.wit.greencommunity.databinding.CardAdBinding
 import org.wit.greencommunity.models.AdModel
@@ -34,7 +35,11 @@ class AdAdapter(private var ads: ArrayList<AdModel>, private val listener: AdLis
                 holder.adPrice.text = ad.price.toString() + "€"
             }
 
-            holder.adImg.setImageURI(ad.adImg?.toUri())
+            Picasso.get()
+                .load(ad.adImg?.toUri())
+                .placeholder(R.mipmap.ic_launcher_foreground)
+                .into(holder.adImg)
+
             /**
              * for the code in line 45 I used the following link as reference
              * Link: https://stackoverflow.com/questions/33283493/recyclerview-recycled-viewholder-image-view-wrong-size

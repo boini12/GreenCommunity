@@ -47,7 +47,7 @@ class AdActivity : AppCompatActivity() {
     private var ad = AdModel()
     private lateinit var auth: FirebaseAuth
     private lateinit var database : DatabaseReference
-    private val PERMISSION_ID = 42
+    private val permissionID = 42
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var img : Uri
@@ -82,6 +82,11 @@ class AdActivity : AppCompatActivity() {
             ""
         }
 
+        Picasso.get()
+            .load(ad.adImg?.toUri())
+            .placeholder(R.mipmap.ic_launcher)
+            .into(binding.adImg)
+
         i("AdActivity has started")
 
         if(intent.hasExtra("ad_view")){
@@ -103,7 +108,7 @@ class AdActivity : AppCompatActivity() {
             ad = intent.extras?.getParcelable("ad_edit")!!
             binding.adTitle.setText(ad.title)
             binding.btnAddImg.text = "Change Image"
-            binding.adDescription.setText(ad.description)
+            //binding.adDescription.setText(ad.description)
             binding.adFree.isChecked = ad.isFree
             binding.adPrice.setText(ad.price.toString())
             binding.btnAdd.text = "Save Ad"
@@ -132,7 +137,7 @@ class AdActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener{
             if((validateTitle() || validatePrice()) && validatePrice() && validateTitle()){
                 ad.title = binding.adTitle.text.toString()
-                ad.description = binding.adDescription.text.toString()
+               // ad.description = binding.adDescription.text.toString()
                 ad.isFree = binding.adFree.isChecked
                 ad.price = binding.adPrice.text.toString().toDouble()
 
@@ -298,7 +303,7 @@ class AdActivity : AppCompatActivity() {
 
     private fun requestPermissions(){
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION),
-            PERMISSION_ID)
+            permissionID)
     }
 
     override fun onRequestPermissionsResult(
@@ -307,7 +312,7 @@ class AdActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == PERMISSION_ID){
+        if(requestCode == permissionID){
             if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
                 //Granted
             }
