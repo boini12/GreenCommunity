@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomToolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="titleTextColor">?attr/colorSecondary</item>
+    </style>
+
+</resources>
