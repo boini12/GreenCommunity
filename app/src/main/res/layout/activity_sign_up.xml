@@ -15,79 +15,74 @@
         />
 
     <LinearLayout
-        android:layout_width="332dp"
-        android:layout_height="525dp"
+        android:layout_width="339dp"
+        android:layout_height="538dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btn_signUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appToolbar"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/appToolbar">
 
         <EditText
             android:id="@+id/username"
+            style="@style/CustomEditText"
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
-            android:hint="@string/signUp_username"
-            android:autofillHints ="hint"
-            style="@style/CustomEditText"
-            />
+            android:autofillHints="hint"
+            android:hint="@string/signUp_username" />
 
         <EditText
             android:id="@+id/email"
+            style="@style/CustomEditText"
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
+            android:autofillHints="hint"
             android:hint="@string/signUp_email"
-            android:autofillHints ="hint"
-            android:inputType="textEmailAddress"
-            style="@style/CustomEditText"
-            />
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/password"
+            style="@style/CustomEditText"
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
+            android:autofillHints="hint"
             android:hint="@string/signUp_password"
-            android:autofillHints ="hint"
-            android:inputType="textPassword"
-            style="@style/CustomEditText"
-            />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/passwordAgain"
+            style="@style/CustomEditText"
             android:layout_width="320dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
+            android:autofillHints="hint"
             android:hint="@string/password_again"
-            android:autofillHints ="hint"
-            android:inputType="textPassword"
-            style="@style/CustomEditText"
-            />
-
-        <Button
-            android:id="@+id/addImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/button_addImage"
-            style="@style/CustomButton"
-            />
+            android:inputType="textPassword" />
 
         <ImageView
             android:id="@+id/profileImg"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/description_profile"
-            />
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <Button
+            android:id="@+id/addImage"
+            style="@style/CustomButton"
+            android:layout_width="311dp"
+            android:layout_height="74dp"
+            android:layout_margin="16dp"
+            android:text="@string/button_addImage" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_signUp"
+        style="@style/CustomButton"
         android:layout_width="278dp"
         android:layout_height="73dp"
         android:layout_marginBottom="44dp"
@@ -95,8 +90,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/CustomButton"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
