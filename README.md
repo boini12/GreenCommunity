@@ -640,6 +640,10 @@ To change the color of the Navigation Drawer Buger, I used the following StackOv
 
 https://stackoverflow.com/questions/31870132/how-to-change-color-of-hamburger-icon-in-material-design-navigation-drawer
 
+I used the following guide to implement a dark theme:
+
+https://developer.android.com/develop/ui/views/theming/darktheme
+
 The background image (dark and light) was created by me using GIMP
 
 
