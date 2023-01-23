@@ -142,13 +142,16 @@ class ProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun validateUsername() : Boolean {
+        val regex = Regex("\\s")
         return if(binding.profileActivity.username.text.isEmpty()){
             binding.profileActivity.username.error = resources.getString(R.string.enter_username)
+            false
+        }else if(binding.profileActivity.username.text.contains(regex)){
+            binding.profileActivity.username.error = resources.getString(R.string.username_with_space)
             false
         }else{
             true
         }
-
     }
 
     private fun registerImagePickerCallback(){
