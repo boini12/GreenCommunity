@@ -4,10 +4,17 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/colorNight</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your theme here. -->
+        <item name="background">@drawable/background</item>
+        <item name="colorAccent">@color/colorNight</item>
+
 
         <!-- Used the following link for this line: https://stackoverflow.com/questions/3519277/how-to-change-the-text-color-of-menu-item-in-android -->
         <item name="android:actionMenuTextColor">@color/white</item>

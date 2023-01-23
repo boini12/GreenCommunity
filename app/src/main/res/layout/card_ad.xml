@@ -9,7 +9,7 @@
     card_view:cardCornerRadius="15dp"
     android:clickable="true"
     card_view:cardElevation="7dp"
-    card_view:cardBackgroundColor="@color/white"
+    card_view:cardBackgroundColor="?attr/colorSecondaryVariant"
     android:elevation="24dp"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     >

@@ -3,7 +3,7 @@
 
     <style name="CustomTextColored">
         <item name="android:textSize">@dimen/font_normal</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
 </resources>

@@ -4,7 +4,7 @@
     <style name="CustomHomeText">
 
         <item name="android:textSize">@dimen/font_large</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
 
     </style>
 </resources>

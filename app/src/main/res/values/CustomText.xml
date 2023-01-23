@@ -2,7 +2,9 @@
 <resources>
 
     <style name="CustomText">
+
         <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
 
     </style>
 

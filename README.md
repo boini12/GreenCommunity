@@ -43,17 +43,18 @@ The following topics will be covered in the following part:
     - [Authentification](#authentification)
     - [Realtime DB](#realtime-db)
 - [Location](#location)
+- [Dark Theme](#dark-theme)
 - [Messenger](#messenger)
 - [Tests](#tests)
 - [References](#references)
 - [Author](#author)
 
 ## Installation
-For the app a minimum SDK of 30 is set. The target SDK is set to 33. This means Android phones running Android 29 and lower won't be able to open this app. 
+For the app a minimum SDK of 30 is set. The target SDK is set to 32. This means Android phones running Android 29 and lower won't be able to open this app. 
 
 For the testing purposes of the application an Emulator in Android Studio was used. This was a Pixel 4 running Android 31.
 
-During the course of developing this app other Emulators running Android 30 and Android 33 were also tested, both were Pixel devices.
+During the course of developing this app other Emulators running Android 30 and Android 32 were also tested, both were Pixel devices.
 
 ## How to use the app
 After starting the application, the user will be promted with the HomeActivity. The user can press the button in the middle of the screen. If no user is logged in, then this Activity will redirect the user to another Activity where they can decide wheather they want to login (Account already exits) or want to sign-up for this app. 
@@ -543,6 +544,29 @@ private fun isLocationEnabled() : Boolean {
 ```
 When both of these checks return true, the mFusedLocationClient will get the last Location from the device. After it has been successfully aquired, this location will be set to variable of the same name.
 
+## Dark Theme
+
+The GreenCommunity App comes with a build in dark mode. The app adjust according to the system settings from the device. If the device has dark mode enabled, then the app will also be displayed in dark mode.
+
+Here are some pictures from the dark mode, to give an impression on how it looks:
+
+The dark HomeActivity:
+
+<img src="images/HomeActivity_dark.png"
+    alt="HomeActivity in dark mode"
+     style="float: left; margin-right: 10px;" />
+
+As you can see the colors were adjusted to a dark grey as the background color and a lighter grey for the buttons and toolbar. The text color has been adjusted to white.
+
+Furthermore, the background image of the HomeActivity is also different. It now displays a world that is dark and has the lights on.
+
+The dark AdListActivity:
+
+<img src="images/AdListActivity_dark.png"
+    alt="AdListActivity in dark mode"
+     style="float: left; margin-right: 10px;" />
+
+
 ## Messenger
 
 As of right now, no messenger has been implemented. But it is planned to do so using Firebase once again.
@@ -616,6 +640,7 @@ To change the color of the Navigation Drawer Buger, I used the following StackOv
 
 https://stackoverflow.com/questions/31870132/how-to-change-color-of-hamburger-icon-in-material-design-navigation-drawer
 
+The background image (dark and light) was created by me using GIMP
 
 
 ## Author
