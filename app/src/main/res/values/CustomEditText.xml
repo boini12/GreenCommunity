@@ -6,10 +6,11 @@
         <item name="android:autofillHints">hint</item>
         <item name="android:inputType">text</item>
         <item name="android:padding">@dimen/padding</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColorHint">@color/colorPrimaryLighter</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorHint">?attr/colorOnSecondary</item>
+        <item name="colorAccent">?attr/colorOnSecondary</item>
 
     </style>
 
