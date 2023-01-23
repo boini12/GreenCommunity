@@ -85,6 +85,7 @@
     <string name="enter_price_or_free">Enter a price or make ad free</string>
     <string name="enter_valid_price">Please enter a valid price</string>
     <string name="email_already_registered">Email already registered</string>
+    <string name="username_with_space">Space not allowed</string>
 
 
 

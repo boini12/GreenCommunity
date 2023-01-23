@@ -102,13 +102,16 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun validateUsername() : Boolean {
+        val regex = Regex("\\s")
         return if(binding.username.text.isEmpty()){
             binding.username.error = resources.getString(R.string.enter_username)
+            false
+        }else if(binding.username.text.contains(regex)){
+            binding.username.error = resources.getString(R.string.username_with_space)
             false
         }else{
             true
         }
-
     }
 
     private fun validateEmail() : Boolean {
