@@ -55,7 +55,6 @@
         android:layout_width="240dp"
         android:layout_height="55dp"
         android:text="@string/text_ChooseOption"
-        android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
